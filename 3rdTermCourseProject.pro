@@ -4,8 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    input.cpp
+    cexpression.cpp
 
 HEADERS += \
-    input.h
+    cexpression.h
 
