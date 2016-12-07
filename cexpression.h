@@ -4,10 +4,15 @@
 #include <string>
 
 
+#define BLOCK_SIZE 1
+
+typedef std::string TExpression;
+
+
 class CExpression
 {
 private:
-    std::string expression;
+    TExpression expression;
 
 public:
     CExpression();
