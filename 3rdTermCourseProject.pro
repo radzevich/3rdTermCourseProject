@@ -4,8 +4,14 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    cexpression.cpp
+    cexpression.cpp \
+    chromosome.cpp \
+    calculator.cpp \
+    tree.cpp
 
 HEADERS += \
-    cexpression.h
+    cexpression.h \
+    chromosome.h \
+    calculator.h \
+    tree.h
 
