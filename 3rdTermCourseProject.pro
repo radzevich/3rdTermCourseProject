@@ -6,12 +6,14 @@ CONFIG -= qt
 SOURCES += \
     cexpression.cpp \
     chromosome.cpp \
-    calculator.cpp \
-    tree.cpp
+    adjacencymatrix.cpp \
+    operandsmatrix.cpp \
+    operatormatrix.cpp
 
 HEADERS += \
     cexpression.h \
     chromosome.h \
-    calculator.h \
-    tree.h
+    adjacencymatrix.h \
+    operandsmatrix.h \
+    operatormatrix.h
 

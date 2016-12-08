@@ -60,10 +60,3 @@ unsigned int getExpressionArity (TExpression& expression)
 }
 
 
-
-void createAdjacencyMatrix()
-{
-   // EXPRESSION_RESULT
-}
-
-

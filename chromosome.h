@@ -5,14 +5,6 @@
 
 #define CONJ 0xFF00
 #define DISJ 0x00FF
-#define LEFT_ASCII_LETTER 'a'
-#define ALPHABET_SIZE 26
-#define OPERAND_FIELD_CAPACITY 256
-
-typedef unsigned char TCell;
-
-TCell **_operandField;
-
 
 
 typedef unsigned char TChromosome;
