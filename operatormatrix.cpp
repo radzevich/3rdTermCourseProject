@@ -33,3 +33,4 @@ void OperatorMatrix::initializeField()
         i %= OPERAND_FIELD_CAPACITY;
     }
 }
+

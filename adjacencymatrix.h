@@ -10,16 +10,13 @@ class AdjacencyMatrix
 private:
     TCell **field;
     unsigned int chance;
-    unsigned int expressionArity;
 
-    void setChance( unsigned int chance );
-    void getRandomPosition ( unsigned int &i, unsigned int &j );
+    void setChance (unsigned int chance);
+    void getRandomPosition (unsigned int &i, unsigned int &j);
     unsigned int getChance();
-    unsigned int getExpressionArity();
 
 public:
     AdjacencyMatrix();
-    void setExpressionArity( unsigned int expressionArity );
 };
 
 #endif // ADJACENCYMATRIX_H

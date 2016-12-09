@@ -3,16 +3,20 @@
 
 #include "cexpression.h"
 
-#define CONJ 0xFF00
-#define DISJ 0x00FF
+#define BITS_IN_BYTE 8
+#define CHANCE 4
 
-
-typedef unsigned char TChromosome;
+typedef unsigned char TGene;
+typedef TGene* TChromosome;
 
 class Chromosome
 {
 private:
-    TChromosome *chromosome;
+    TChromosome chromosome;
+    unsigned int chromosomeSize = 0;
+    unsigned int geneCapacity;
+    
+    void initializeChromosome();
 public:
     Chromosome (TExpression &expression);
 };

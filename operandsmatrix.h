@@ -6,19 +6,22 @@
 
 #define ALPHABET_SIZE 26
 
-
+//Two-dimensional matrix, consisting of randomly spreaded operands of source expression.
 class OperandsMatrix : AdjacencyMatrix
 {
 private:
-    bool *operands;
+    //The number of uniq operands in source expression.
+    unsigned int expressionArity;
+    //Array of all uniq different operands.
+    char *operands;
 
-    bool OperandsMatrix::*getOperands ( TExpression *expression );
-    unsigned int calculateExpressionArity();
+    //Returns the part or operand's repeats among others in the operand's field.
     unsigned int calculateChance();
-    void initializeOperandField();
+    //Initializes all cells of operand's field with random values.
+    void initializeField();
 
 public:
-    OperandsMatrix(TExpression *expression);
+    OperandsMatrix(unsigned int expressionArity, char &operands);
 };
 
 #endif // OPERANDSMATRIX_H

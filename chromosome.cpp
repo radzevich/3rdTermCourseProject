@@ -1,23 +1,29 @@
 #include "chromosome.h"
 #include "cexpression.h"
-#include "calculator.h"
+#include "adjacencymatrix.h"
+#include <cstdlib>
+#include <ctime>
 
 
-
-
-void getRandomPosition(unsigned int &i, unsigned int &j);
-void initializeOperandField (bool *checkArray, unsigned int expressionArity);
-
-template <typename T>
-unsigned int letterToInt(T letter);
-unsigned char intToLetter(const int num);
-
-
-Chromosome::Chromosome(TExpression &expression)
+Chromosome::Chromosome (TExpression &expression)
 {
-    unsigned int chromosomeSize = expression.length();
+    this->chromosomeSize = expression.length();
 
-    this->chromosome = (TChromosome*)calloc(chromosomeSize, sizeof(TChromosome));
+    this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
+
+    this->geneCapacity = sizeof (TGene) * BITS_IN_BYTE;
+
+    initializeChromosome();
+}
+
+
+void Chromosome::initializeChromosome()
+{
+    srand (time (NULL));
+
+    for (int i = 0; i < this->chromosomeSize; i++)
+        if (0 == rand() % CHANCE)
+            this->chromosome[i] = rand() % this->geneCapacity;
 }
 
 

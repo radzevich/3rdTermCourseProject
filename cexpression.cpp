@@ -1,11 +1,10 @@
 #include "cexpression.h"
-#include "calculator.h"
 #include <cstdlib>
 
-
-CExpression::CExpression()
+CExpression::CExpression (TExpression &expression)
 {
-
+    this->expression = expression;
+    calculateExpressionArity (expression);
 }
 
 //Check expression validation. Return "false" if invalid symbol have been founded. If expression valid, "true" result will be returned.
@@ -43,10 +42,42 @@ void CExpression::removeSpaces()
     this->expression.resize (expressionLength);
 }
 
-unsigned int getExpressionArity (TExpression& expression)
+//Gives out memmory for operandsArray according to the number of uniq operands used in source expression.
+void CExpression::createOperandsArray()
+{
+    this->operandsArray = (char*) calloc (this->expressionArity * sizeof (char), sizeof (char));
+}
+
+//Initializes operansArray with all uniq operands used in native expression.
+void CExpression::initializeOperandsArray()
+{
+    unsigned int expressionLenght = this->expression.length();
+    unsigned int position = 0;
+    bool operandRepeats;
+
+    //Adding of uniq operands to operandsArray.
+    for (unsigned int i = 0; i < expressionLenght; i++)
+    {
+        operandRepeats = false;
+
+        //Checking for existence of current operand in operandsArray.
+        for (unsigned int j = 0; j < this->expressionArity; j++)
+            if (this->operandsArray[i] == this->expression[j])
+                operandRepeats = true;
+
+        //If operand haven't been added in operandsArray before, it will be added
+        if (!operandRepeats)
+        {
+            this->operandsArray[position] = this->expression[i];
+            position++;
+        }
+    }
+}
+
+//Returns number of uniq operands in expression
+void CExpression::calculateExpressionArity (TExpression& expression)
 {
     unsigned int expressionLength = expression.length();
-    unsigned int expressionArity = 0;
     unsigned short int checkarraySize = sizeof(char);
     bool *checkArray = (bool*) calloc (checkarraySize, BLOCK_SIZE);
 
@@ -54,9 +85,6 @@ unsigned int getExpressionArity (TExpression& expression)
         checkArray[expression[i]] = true;
 
     for (int i = 97; i < 122; i++)
-        expressionArity++;
-
-    return expressionArity;
+        this->expressionArity++;
 }
-
 

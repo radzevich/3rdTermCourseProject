@@ -8,12 +8,14 @@ SOURCES += \
     chromosome.cpp \
     adjacencymatrix.cpp \
     operandsmatrix.cpp \
-    operatormatrix.cpp
+    operatormatrix.cpp \
+    population.cpp
 
 HEADERS += \
     cexpression.h \
     chromosome.h \
     adjacencymatrix.h \
     operandsmatrix.h \
-    operatormatrix.h
+    operatormatrix.h \
+    population.h
 
