@@ -6,14 +6,14 @@
 
 #define ALPHABET_SIZE 26
 
+typedef unsigned char TOperand;
+
 //Two-dimensional matrix, consisting of randomly spreaded operands of source expression.
 class OperandsMatrix : AdjacencyMatrix
 {
 private:
-    //The number of uniq operands in source expression.
-    unsigned int expressionArity;
     //Array of all uniq different operands.
-    char *operands;
+    TOperand *operands;
 
     //Returns the part or operand's repeats among others in the operand's field.
     unsigned int calculateChance();
@@ -21,7 +21,7 @@ private:
     void initializeField();
 
 public:
-    OperandsMatrix(unsigned int expressionArity, char &operands);
+    OperandsMatrix(char &operands);
 };
 
 #endif // OPERANDSMATRIX_H

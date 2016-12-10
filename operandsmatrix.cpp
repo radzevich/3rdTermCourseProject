@@ -4,11 +4,10 @@
 #include <ctime>
 
 
-OperandsMatrix::OperandsMatrix (unsigned int expressionArity, char &operands)
+OperandsMatrix::OperandsMatrix (char &operands)
 {
     //Construction and initialization
     AdjacencyMatrix();
-    this->expressionArity = expressionArity;
     this->operands = &operands;
     this->setChance (calculateChance());
     initializeField();
@@ -26,17 +25,18 @@ void OperandsMatrix::initializeField()
     srand(time(NULL));
 
     unsigned int i = 0, j = 0;
+    unsigned int expressionArity = CExpression.getExpressionArity();
     bool inversionFlag = true;
 
     //Filling cells with random values
     for (unsigned int k = 0; k < expressionArity; k++)
         for (unsigned int n = 0; n < this->chance; n++)
         {
-            //Getting random free position's coordinates.
+            //Getting random free position coordinates.
             getRandomPosition (i, j);
             this->field[i][j] = this->operands[k];
 
-            //Inversing of the hulf part of values
+            //Inversing of the hulf part of values.
             if (inversionFlag)
             this->field[i][j] |= 128;
 
@@ -44,3 +44,19 @@ void OperandsMatrix::initializeField()
         }
 }
 
+TOperand OperandsMatrix :: getOperandThrowPosition (TCell xCoord, yCoord)
+{
+    return this->field[i][j];
+}
+
+
+unsigned int OperandsMatrix :: getOperandNumber (TOperand operand)
+{
+    unsigned int position = 0;
+    unsigned int expressionArity = CExpression.getExpressionArity();
+
+    while ((position < expressionArity) & (operand != this->operands[position]))
+        position++;
+
+    return position;
+}

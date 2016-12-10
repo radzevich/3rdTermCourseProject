@@ -1,14 +1,15 @@
 #include "cexpression.h"
 #include <cstdlib>
+#include <math.h>
 
-CExpression::CExpression (TExpression &expression)
+CExpression :: CExpression (TExpression &expression)
 {
     this->expression = expression;
     calculateExpressionArity (expression);
 }
 
 //Check expression validation. Return "false" if invalid symbol have been founded. If expression valid, "true" result will be returned.
-bool CExpression::invalidSymbolsExists()
+bool CExpression :: invalidSymbolsExists()
 {
     unsigned int expressionLength = this->expression.length();
     //compare expression's symbols with valid ones
@@ -22,7 +23,7 @@ bool CExpression::invalidSymbolsExists()
 }
 
 //Remove spaces from the expression.
-void CExpression::removeSpaces()
+void CExpression :: removeSpaces()
 {
     unsigned int shift = 0;
     unsigned int expressionLength = this->expression.length();
@@ -43,13 +44,13 @@ void CExpression::removeSpaces()
 }
 
 //Gives out memmory for operandsArray according to the number of uniq operands used in source expression.
-void CExpression::createOperandsArray()
+void CExpression :: createOperandsArray()
 {
     this->operandsArray = (char*) calloc (this->expressionArity * sizeof (char), sizeof (char));
 }
 
 //Initializes operansArray with all uniq operands used in native expression.
-void CExpression::initializeOperandsArray()
+void CExpression :: initializeOperandsArray()
 {
     unsigned int expressionLenght = this->expression.length();
     unsigned int position = 0;
@@ -75,7 +76,7 @@ void CExpression::initializeOperandsArray()
 }
 
 //Returns number of uniq operands in expression
-void CExpression::calculateExpressionArity (TExpression& expression)
+void CExpression :: calculateExpressionArity (TExpression& expression)
 {
     unsigned int expressionLength = expression.length();
     unsigned short int checkarraySize = sizeof(char);
@@ -89,8 +90,24 @@ void CExpression::calculateExpressionArity (TExpression& expression)
 }
 
 
-unsigned int CExpression::getExpressionArity()
+unsigned int CExpression :: getExpressionArity()
 {
     return expressionArity;
+}
+
+unsigned int CExpression :: getExpressionLength()
+{
+    return this->expression.length();
+}
+
+void CExpression :: calculateFunctionResultStringLength()
+{
+    //The length of function result equal to 2 ^ (number of uniq operands).
+    this->functionResultSize = exp(2 * log (expression.getExpressionArity()));
+}
+
+unsigned int CExpression :: getFitnessFunctionLength()
+{
+    return this->functionResultSize;
 }
 

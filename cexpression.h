@@ -15,10 +15,14 @@ class CExpression
 {
 private:
     TExpression expression;
+    //The total number of operands and operators.
+    unsigned int expressionLength;
     //Array of all uniq operands used in native string expression.
     static char *operandsArray;
     //The total number of uniq operands.
     static unsigned int expressionArity;
+    //Length of function result equal to 2 ^ (number of uniq operands) ~ legnth of fitness function.
+    static unsigned int functionResultSize;
 
     //Returns operand's name according to it's position in operansArray.
     char getOperandThrowIndex (unsigned int index);
@@ -37,9 +41,10 @@ public:
     CExpression(TExpression& expression);
     //Returns expressionArity.
     unsigned int getExpressionArity();
-
-
-
+    //Returns the length of expression.
+    unsigned int getExpressionLength();
+    //Returns the functionResultSize value.
+    unsigned int getFitnessFunctionLength();
 };
 
 #endif // CEXPRESSION_H
