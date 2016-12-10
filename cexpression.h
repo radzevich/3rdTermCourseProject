@@ -2,21 +2,23 @@
 #define CEXPRESSION_H
 
 #include <string>
-
+#include "operandsmatrix.h"
+#include "operatormatrix.h"
 
 #define BLOCK_SIZE 1
 
 typedef std::string TExpression;
+typedef bool* TFitnessFunction;
 
 
 class CExpression
 {
 private:
     TExpression expression;
-    //array of all uniq operands used in native string expression.
-    char *operandsArray;
-
-    unsigned int expressionArity;
+    //Array of all uniq operands used in native string expression.
+    static char *operandsArray;
+    //The total number of uniq operands.
+    static unsigned int expressionArity;
 
     //Returns operand's name according to it's position in operansArray.
     char getOperandThrowIndex (unsigned int index);

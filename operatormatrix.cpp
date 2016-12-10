@@ -3,9 +3,9 @@
 #include <ctime>
 #include <cstdlib>
 
-OperatorMatrix::OperatorsMatrix()
+OperatorMatrix::OperatorMatrix()
 {
-    AdjacencyMatrix::AdjacencyMatrix();
+    AdjacencyMatrix();
     initializeField();
 }
 
@@ -14,14 +14,14 @@ void OperatorMatrix::initializeField()
     srand(time(NULL));
 
     unsigned int cellsInitialized = 0;
-    unsigned int i = 0; j = 0;
+    unsigned int i = 0, j = 0;
     unsigned int fieldSquare = OPERAND_FIELD_CAPACITY * OPERAND_FIELD_CAPACITY / 2;
 
     while (cellsInitialized < fieldSquare)
     {
-        if ((rand() % 2 != 0) & (CONJ != this->field[i][j]))
+        if ((rand() % 2 != 0) & ((TCell) CONJ != field[i][j]))
         {
-            this->field[i][j] = CONJ;
+            this->field[i][j] = (TCell) CONJ;
             cellsInitialized++;
         }
         else

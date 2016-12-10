@@ -3,6 +3,7 @@
 #include "adjacencymatrix.h"
 #include <cstdlib>
 #include <ctime>
+#include <math.h>
 
 
 Chromosome::Chromosome (TExpression &expression)
@@ -21,7 +22,7 @@ void Chromosome::initializeChromosome()
 {
     srand (time (NULL));
 
-    for (int i = 0; i < this->chromosomeSize; i++)
+    for (unsigned int i = 0; i < (this->chromosomeSize); i++)
         if (0 == rand() % CHANCE)
             this->chromosome[i] = rand() % this->geneCapacity;
 }
@@ -31,4 +32,11 @@ void Chromosome::initializeChromosome()
 int main()
 {
     return 0;
+}
+
+
+TFitnessFunction Chromosome::calculateFitnessFunction(CExpression &expression)
+{
+    unsigned int fitnessFunctionSize = exp(2 * log (expression.getExpressionArity()));
+    this->fitnessFunction = (TFitnessFunction) calloc (fitnessFunctionSize, sizeof(bool));
 }

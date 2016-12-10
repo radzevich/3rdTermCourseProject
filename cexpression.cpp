@@ -82,9 +82,15 @@ void CExpression::calculateExpressionArity (TExpression& expression)
     bool *checkArray = (bool*) calloc (checkarraySize, BLOCK_SIZE);
 
     for (unsigned int i = 0; i < expressionLength; i++)
-        checkArray[expression[i]] = true;
+        checkArray[(unsigned int)expression[i]] = true;
 
     for (int i = 97; i < 122; i++)
         this->expressionArity++;
+}
+
+
+unsigned int CExpression::getExpressionArity()
+{
+    return expressionArity;
 }
 

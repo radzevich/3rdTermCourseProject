@@ -7,14 +7,14 @@
 OperandsMatrix::OperandsMatrix (unsigned int expressionArity, char &operands)
 {
     //Construction and initialization
-    AdjacencyMatrix::AdjacencyMatrix();
+    AdjacencyMatrix();
     this->expressionArity = expressionArity;
     this->operands = &operands;
     this->setChance (calculateChance());
     initializeField();
 }
 
-//Returns the part or operand's repeats among others in the operand's field.
+//Returns the part of operand's repeats among others in the operand's field.
 unsigned int OperandsMatrix::calculateChance()
 {
     return ((OPERAND_FIELD_CAPACITY * OPERAND_FIELD_CAPACITY) % (expressionArity * 2 + 1));
@@ -34,7 +34,7 @@ void OperandsMatrix::initializeField()
         {
             //Getting random free position's coordinates.
             getRandomPosition (i, j);
-            this->field[i][j] = intToLetter(k);
+            this->field[i][j] = this->operands[k];
 
             //Inversing of the hulf part of values
             if (inversionFlag)

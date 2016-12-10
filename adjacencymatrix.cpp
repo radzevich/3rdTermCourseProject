@@ -17,17 +17,24 @@ void AdjacencyMatrix::setChance (unsigned int chance)
     this->chance = chance;
 }
 
+
 unsigned int AdjacencyMatrix::getChance()
 {
     return this->chance;
 }
 
 
-void getRandomPosition (unsigned int &i, unsigned int &j)
+void AdjacencyMatrix::getRandomPosition (unsigned int &i, unsigned int &j)
 {
     while (0 == letterToInt (this->field[i][j]))
     {
         i = rand() % OPERAND_FIELD_CAPACITY;
         j = rand() % OPERAND_FIELD_CAPACITY;
     }
+}
+
+
+unsigned int letterToInt (char letter)
+{
+    return (unsigned int) letter - 97;
 }
