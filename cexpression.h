@@ -16,7 +16,7 @@ class CExpression
 private:
     TExpression expression;
     //The total number of operands and operators.
-    unsigned int expressionLength;
+    static unsigned int expressionLength;
     //Array of all uniq operands used in native string expression.
     static char *operandsArray;
     //The total number of uniq operands.
@@ -36,15 +36,17 @@ private:
     void initializeOperandsArray();
     //Calculates the number of uniq operands in expression
     void calculateExpressionArity (TExpression& expression);
+    //Calculate function result length (2 ^ (number of uniq operands)).
+    void calculateFunctionResultStringLength();
 
 public:
     CExpression(TExpression& expression);
     //Returns expressionArity.
-    unsigned int getExpressionArity();
+    static unsigned int getExpressionArity();
     //Returns the length of expression.
-    unsigned int getExpressionLength();
+    static unsigned int getExpressionLength();
     //Returns the functionResultSize value.
-    unsigned int getFitnessFunctionLength();
+    static unsigned int getFitnessFunctionLength();
 };
 
 #endif // CEXPRESSION_H

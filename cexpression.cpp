@@ -97,17 +97,17 @@ unsigned int CExpression :: getExpressionArity()
 
 unsigned int CExpression :: getExpressionLength()
 {
-    return this->expression.length();
+    return CExpression :: getExpressionLength();
 }
 
 void CExpression :: calculateFunctionResultStringLength()
 {
     //The length of function result equal to 2 ^ (number of uniq operands).
-    this->functionResultSize = exp(2 * log (expression.getExpressionArity()));
+    functionResultSize = (unsigned int) round (exp (this->getExpressionArity() * log (2)));
 }
 
 unsigned int CExpression :: getFitnessFunctionLength()
 {
-    return this->functionResultSize;
+    return functionResultSize;
 }
 

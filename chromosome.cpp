@@ -31,15 +31,8 @@ void Chromosome :: initializeChromosome()
             this->chromosome[i] = rand() % this->geneCapacity;
 }
 
-int main()
-{
-    return 0;
-}
 
-
-
-
-TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex = 0, unsigned int rightIndex = (this->chromosomeSize - 1))
+TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex, unsigned int rightIndex)
 {
     TFitnessFunction fitnessFunction = createFitnessFunction();
 
@@ -48,23 +41,24 @@ TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex 
         unsigned int lowPriorityPosition = getLowPriorityPosition (leftIndex, rightIndex);
 
         if (!(leftIndex == lowPriorityPosition) & !(rightIndex == lowPriorityPosition))
-            if ((TChromosome) CONJ == this->chromosome[lowPriorityPosition])
-                conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
+            if ((TGene) CONJ == chromosome[lowPriorityPosition])
+                fitnessFunction = conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
             else
-                disjunctive (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
+                fitnessFunction = disjunctive (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
         else
-            TFitnessFunction
+            fitnessFunction = getElementaryFitnessFunction(leftIndex, rightIndex);
     }
 
-
+    return fitnessFunction;
 }
 
-unsigned int getLowPriorityPosition (unsigned int leftIndex, unsigned int rightIndex)
+
+unsigned int Chromosome :: getLowPriorityPosition (unsigned int leftIndex, unsigned int rightIndex)
 {
-    TCell lowPriority = exp(2 * log (this->geneCapacity)) - 1;
+    TCell lowPriority = (unsigned int) round (exp(this->geneCapacity * log (2))) - 1;
     unsigned int lowPriorityPostion = leftIndex + OPERATION_PRIORITY;
 
-    for (unsigned int i = lowPriorityPostion; i < rightIndex; i + BLOCK_SHIFT)
+    for (unsigned int i = lowPriorityPostion; i < rightIndex; i += BLOCK_SHIFT)
     {
         if (lowPriority >= this->chromosome[i])
         {
@@ -76,15 +70,17 @@ unsigned int getLowPriorityPosition (unsigned int leftIndex, unsigned int rightI
     return lowPriorityPostion;
 }
 
+
 TFitnessFunction Chromosome :: createFitnessFunction()
 {
     //Fitness function creating throw allocating space for it. Returns pointer to this space.
-    return (TFitnessFunction) calloc (CExpression.getFitnessFunctionLength(), sizeof(bool));
+    return (TFitnessFunction) calloc (CExpression :: getFitnessFunctionLength(), sizeof(bool));
 }
+
 
 TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFunction fun2)
 {
-    unsigned int fitnessFunctionLength = CExpression.getFitnessFunctionLength();
+    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength();
     //Two strings conjuction.
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         fun1[i] &= fun2[i];
@@ -94,9 +90,10 @@ TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFuncti
     return fun1;
 }
 
+
 TFitnessFunction Chromosome :: disjunctive (TFitnessFunction fun1, TFitnessFunction fun2)
 {
-    unsigned int fitnessFunctionLength = CExpression.getFitnessFunctionLength();
+    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength();
     //Two strings disjunctive.
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         fun1[i] |= fun2[i];
@@ -106,8 +103,43 @@ TFitnessFunction Chromosome :: disjunctive (TFitnessFunction fun1, TFitnessFunct
     return fun1;
 }
 
-TFitnessFunction Chromosome :: getSourceOneOperandFitnessFunction(TCell xCoord, yCoord)
-
+//Check if operand inversed. Returns true if it is.
+bool operanedInversed (TOperand operand)
 {
+    return (operand && 127 != 0);
+}
 
+
+//Returns simple one-operand function result array.
+TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOperand yCoord)
+{
+    //Fitness function creating.
+    TFitnessFunction fitnessFunction = createFitnessFunction();
+
+    //Getting operand value throw it's coordinates.
+    TOperand operand = this->operandsMatrix->getOperandThrowPosition(xCoord, yCoord);
+
+    //Getting operand index among other ones in source expression.
+    unsigned int operandNumber = this->operandsMatrix->getOperandNumber(operand);
+
+    //Calculating number of same values repeats in result array.
+    unsigned int repeatsCount = (unsigned int)round (exp (operandNumber * log (2)));
+
+    //Calculating position for fitness function initialize starting.
+    //If operand haven't been inversed, it will be initialized from the (2 ^ operandNumber) position with "true" value.
+    //In other way array will be inversed by initializing with "false" value instead of "true".
+    unsigned int startPosition;
+    if (operanedInversed (operand))
+        startPosition = 0;
+    else
+        startPosition = repeatsCount;
+    //Inia;ize cycle.
+    for (unsigned int i = startPosition; i < CExpression :: getExpressionArity(); )
+    {
+        for (unsigned int j = i; j < repeatsCount; j++)
+            fitnessFunction[j] = true;
+        i += repeatsCount * 2;
+    }
+
+    return fitnessFunction;
 }

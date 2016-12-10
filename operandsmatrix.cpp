@@ -4,7 +4,7 @@
 #include <ctime>
 
 
-OperandsMatrix::OperandsMatrix (char &operands)
+OperandsMatrix::OperandsMatrix (TOperand &operands)
 {
     //Construction and initialization
     AdjacencyMatrix();
@@ -16,7 +16,7 @@ OperandsMatrix::OperandsMatrix (char &operands)
 //Returns the part of operand's repeats among others in the operand's field.
 unsigned int OperandsMatrix::calculateChance()
 {
-    return ((OPERAND_FIELD_CAPACITY * OPERAND_FIELD_CAPACITY) % (expressionArity * 2 + 1));
+    return ((OPERAND_FIELD_CAPACITY * OPERAND_FIELD_CAPACITY) % (CExpression :: getExpressionArity() * 2 + 1));
 }
 
 //Initializes all cells of operand's field with random values.
@@ -25,7 +25,7 @@ void OperandsMatrix::initializeField()
     srand(time(NULL));
 
     unsigned int i = 0, j = 0;
-    unsigned int expressionArity = CExpression.getExpressionArity();
+    unsigned int expressionArity = CExpression :: getExpressionArity();
     bool inversionFlag = true;
 
     //Filling cells with random values
@@ -44,16 +44,16 @@ void OperandsMatrix::initializeField()
         }
 }
 
-TOperand OperandsMatrix :: getOperandThrowPosition (TCell xCoord, yCoord)
+TOperand OperandsMatrix :: getOperandThrowPosition (TCell xCoord, TCell yCoord)
 {
-    return this->field[i][j];
+    return this->field[xCoord][yCoord];
 }
 
 
 unsigned int OperandsMatrix :: getOperandNumber (TOperand operand)
 {
     unsigned int position = 0;
-    unsigned int expressionArity = CExpression.getExpressionArity();
+    unsigned int expressionArity = CExpression :: getExpressionArity();
 
     while ((position < expressionArity) & (operand != this->operands[position]))
         position++;

@@ -21,7 +21,11 @@ private:
     void initializeField();
 
 public:
-    OperandsMatrix(char &operands);
+    OperandsMatrix(TOperand &operands);
+
+    TOperand getOperandThrowPosition (TCell xCoord, TCell yCoord);
+
+    unsigned int getOperandNumber (TOperand operand);
 };
 
 #endif // OPERANDSMATRIX_H
