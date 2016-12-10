@@ -40,14 +40,13 @@ TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex,
     {
         unsigned int lowPriorityPosition = getLowPriorityPosition (leftIndex, rightIndex);
 
-        if (!(leftIndex == lowPriorityPosition) & !(rightIndex == lowPriorityPosition))
-            if ((TGene) CONJ == chromosome[lowPriorityPosition])
-                fitnessFunction = conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
-            else
-                fitnessFunction = disjunctive (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
+        if ((TGene) CONJ == chromosome[lowPriorityPosition])
+            fitnessFunction = conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
         else
-            fitnessFunction = getElementaryFitnessFunction(leftIndex, rightIndex);
+            fitnessFunction = disjunctive (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1), calculateFitnessFunction (lowPriorityPosition + 2, rightIndex));
     }
+    else
+        fitnessFunction = getElementaryFitnessFunction(leftIndex, rightIndex);
 
     return fitnessFunction;
 }
