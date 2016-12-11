@@ -1,14 +1,25 @@
 #include "chromosome.h"
+<<<<<<< HEAD
+=======
+#include "cexpression.h"
+#include "adjacencymatrix.h"
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 #include <cstdlib>
 #include <ctime>
 #include <math.h>
 
 
+<<<<<<< HEAD
 Chromosome :: Chromosome (CExpression *expression)
 {
     this->sourceExpression = expression;
 
     this->chromosomeSize = 2 * expression->getExpressionLength();
+=======
+Chromosome :: Chromosome (CExpression &expression)
+{
+    this->chromosomeSize = 2 * expression.getExpressionLength();
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 
     this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
 
@@ -75,13 +86,21 @@ unsigned int Chromosome :: getLowPriorityPosition (unsigned int leftIndex, unsig
 TFitnessFunction Chromosome :: createFitnessFunction()
 {
     //Fitness function creating throw allocating space for it. Returns pointer to this space.
+<<<<<<< HEAD
     return (TFitnessFunction) calloc (this->sourceExpression->getFitnessFunctionLength(), sizeof(bool));
+=======
+    return (TFitnessFunction) calloc (CExpression :: getFitnessFunctionLength(), sizeof(bool));
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 }
 
 
 TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFunction fun2)
 {
+<<<<<<< HEAD
     unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
+=======
+    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength();
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
     //Two strings conjuction.
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         fun1[i] &= fun2[i];
@@ -94,7 +113,11 @@ TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFuncti
 
 TFitnessFunction Chromosome :: disjunctive (TFitnessFunction fun1, TFitnessFunction fun2)
 {
+<<<<<<< HEAD
     unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength();
+=======
+    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength();
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
     //Two strings disjunctive.
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         fun1[i] |= fun2[i];
@@ -141,7 +164,11 @@ void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, 
     //Calculating position for fitness function initialize starting.
     unsigned int startPosition;
 
+<<<<<<< HEAD
     unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
+=======
+    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength ();
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 
     //If operand haven't been inverted, it will be initialized from the (2 ^ operandNumber) position with "true" value.
     //In other way array will be inverted by initializing with "false" value instead of "true".
@@ -161,7 +188,11 @@ void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, 
 
 void Chromosome :: initializeEmptyFunction (TFitnessFunction *fitnessFunction, TOperation operation)
 {
+<<<<<<< HEAD
     unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
+=======
+    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength ();
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         (*fitnessFunction)[i] = operation;

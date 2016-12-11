@@ -2,6 +2,7 @@
 #define POPULATION_H
 
 #include "chromosome.h"
+<<<<<<< HEAD
 #include "cexpression.h"
 
 #define POPULATION 16
@@ -42,4 +43,17 @@ public:
 
 
 
+=======
+
+#define POPULATION 16
+
+class Population
+{
+private:
+    Chromosome population[POPULATION];
+public:
+    Population();
+};
+
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 #endif // POPULATION_H

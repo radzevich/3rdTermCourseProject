@@ -1,4 +1,8 @@
 #include "operatormatrix.h"
+<<<<<<< HEAD
+=======
+#include "adjacencymatrix.h"
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
 #include <ctime>
 #include <cstdlib>
 
