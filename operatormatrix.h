@@ -8,7 +8,7 @@
 #define BOOL_CONJ true
 #define BOOL_DISJ false
 
-typedef bool TOperation;
+typedef enum {conjuct = BOOL_CONJ, disjunct = BOOL_DISJ} TOperation;
 
 class OperatorMatrix : AdjacencyMatrix
 {
