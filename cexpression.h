@@ -2,14 +2,40 @@
 #define CEXPRESSION_H
 
 #include <string>
+<<<<<<< HEAD
 //#include "operandsmatrix.h"
 //#include "operatormatrix.h"
+=======
+<<<<<<< HEAD
+//#include "operandsmatrix.h"
+//#include "operatormatrix.h"
+=======
+<<<<<<< HEAD
+//#include "operandsmatrix.h"
+//#include "operatormatrix.h"
+=======
+#include "operandsmatrix.h"
+#include "operatormatrix.h"
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 
 #define BLOCK_SIZE 1
 
 typedef std::string TExpression;
 typedef bool* TFitnessFunction;
+<<<<<<< HEAD
 typedef unsigned char TOperand;
+=======
+<<<<<<< HEAD
+typedef unsigned char TOperand;
+=======
+<<<<<<< HEAD
+typedef unsigned char TOperand;
+=======
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 
 
 class CExpression
@@ -18,6 +44,13 @@ private:
     TExpression expression;
 
     //The total number of operands and operators.
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
     unsigned int expressionLength;
 
     //Array of all uniq operands used in native string expression.
@@ -31,6 +64,27 @@ private:
 
     //Returns operand's name according to it's position in operansArray.
     TOperand getOperandThrowIndex (unsigned int index);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+    static unsigned int expressionLength;
+
+    //Array of all uniq operands used in native string expression.
+    static char *operandsArray;
+
+    //The total number of uniq operands.
+    static unsigned int expressionArity;
+
+    //Length of function result equal to 2 ^ (number of uniq operands) ~ legnth of fitness function.
+    static unsigned int functionResultSize;
+
+    //Returns operand's name according to it's position in operansArray.
+    char getOperandThrowIndex (unsigned int index);
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 
     //Expression validation check. Return "false" if invalid symbol have been founded. If expression valid, "true" result will be returned.
     bool invalidSymbolsExists();
@@ -54,6 +108,13 @@ public:
     CExpression(TExpression& expression);
 
     //Returns expressionArity.
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
     unsigned int getExpressionArity();
 
     //Returns the length of expression.
@@ -63,6 +124,21 @@ public:
     unsigned int getFitnessFunctionLength();
 
     TOperand *getOperandsArray();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+    static unsigned int getExpressionArity();
+
+    //Returns the length of expression.
+    static unsigned int getExpressionLength();
+
+    //Returns the functionResultSize value.
+    static unsigned int getFitnessFunctionLength();
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 };
 
 #endif // CEXPRESSION_H

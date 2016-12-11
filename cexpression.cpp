@@ -46,7 +46,19 @@ void CExpression :: removeSpaces()
 //Gives out memmory for operandsArray according to the number of uniq operands used in source expression.
 void CExpression :: createOperandsArray()
 {
+<<<<<<< HEAD
     this->operandsArray = (TOperand*) calloc (CExpression :: expressionArity * sizeof (TOperand), sizeof (TOperand));
+=======
+<<<<<<< HEAD
+    this->operandsArray = (TOperand*) calloc (CExpression :: expressionArity * sizeof (TOperand), sizeof (TOperand));
+=======
+<<<<<<< HEAD
+    this->operandsArray = (TOperand*) calloc (CExpression :: expressionArity * sizeof (TOperand), sizeof (TOperand));
+=======
+    this->operandsArray = (char*) calloc (this->expressionArity * sizeof (char), sizeof (char));
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 }
 
 //Initializes operansArray with all uniq operands used in native expression.
@@ -62,7 +74,19 @@ void CExpression :: initializeOperandsArray()
         operandRepeats = false;
 
         //Checking for existence of current operand in operandsArray.
+<<<<<<< HEAD
         for (unsigned int j = 0; j < CExpression :: expressionArity; j++)
+=======
+<<<<<<< HEAD
+        for (unsigned int j = 0; j < CExpression :: expressionArity; j++)
+=======
+<<<<<<< HEAD
+        for (unsigned int j = 0; j < CExpression :: expressionArity; j++)
+=======
+        for (unsigned int j = 0; j < this->expressionArity; j++)
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
             if (this->operandsArray[i] == this->expression[j])
                 operandRepeats = true;
 
@@ -108,6 +132,13 @@ void CExpression :: calculateFunctionResultStringLength()
 
 unsigned int CExpression :: getFitnessFunctionLength()
 {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
     return CExpression :: functionResultSize;
 }
 
@@ -121,3 +152,14 @@ int main()
 {
 
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+    return functionResultSize;
+}
+
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
+>>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
