@@ -1,0 +1,26 @@
+#ifndef LOGIC_H
+#define LOGIC_H
+
+#include "adjacencymatrix.h"
+#include "cexpression.h"
+#include "chromosome.h"
+#include "operandsmatrix.h"
+#include "operatormatrix.h"
+#include "population.h"
+
+TExpression *getInputExpression();
+
+class Logic
+{
+private:
+    CExpression _expression;
+    
+    OperandsMatrix _operandsMatrix;
+    
+    OperatorMatrix _operatorMatrix;
+    
+public:
+    Logic();
+};
+
+#endif // LOGIC_H
