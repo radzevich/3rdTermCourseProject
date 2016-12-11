@@ -48,12 +48,17 @@ private:
     
     //Divide chromosome on parts due to priority of operations.
     //The dividing point is the lowest priority operation in subexpression, limited by leftIndex and RightPosition values.
-    TFitnessFunction calculateFitnessFunction (unsigned int leftIndex, unsigned int rightIndex);
+    TFitnessFunction calculateFitnessFunction (unsigned int leftIndex, unsigned int rightIndex, TOperation operation);
 
     //Returns the simplest result of one operand function
-    TFitnessFunction getElementaryFitnessFunction(TCell xCoord, TCell yCoord);
+    TFitnessFunction getElementaryFitnessFunction(TOperand xCoord, TOperand yCoord, TOperation operation);
 
     unsigned int getLowPriorityPosition (unsigned int leftIndex, unsigned int rightIndex);
+
+    void initializeSimpleFunction (TFitnessFunction *fitnessFunction, TOperand operand);
+
+    void initializeEmptyFunction (TFitnessFunction *fitnessFunction, TOperation operation);
+
 public:
     //Calculate expression result.
     TFitnessFunction calculateFitnessFunction ();

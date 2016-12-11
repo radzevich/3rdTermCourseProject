@@ -25,7 +25,7 @@ void OperatorMatrix::initializeField()
             cellsInitialized++;
         }
         else
-            this->field[i][j] = DISJ;
+            this->field[i][j] = (TCell) DISJ;
 
         i++;
         j += i / OPERAND_FIELD_CAPACITY;

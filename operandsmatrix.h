@@ -17,6 +17,7 @@ private:
 
     //Returns the part or operand's repeats among others in the operand's field.
     unsigned int calculateChance();
+
     //Initializes all cells of operand's field with random values.
     void initializeField();
 

@@ -15,36 +15,49 @@ class CExpression
 {
 private:
     TExpression expression;
+
     //The total number of operands and operators.
     static unsigned int expressionLength;
+
     //Array of all uniq operands used in native string expression.
     static char *operandsArray;
+
     //The total number of uniq operands.
     static unsigned int expressionArity;
+
     //Length of function result equal to 2 ^ (number of uniq operands) ~ legnth of fitness function.
     static unsigned int functionResultSize;
 
     //Returns operand's name according to it's position in operansArray.
     char getOperandThrowIndex (unsigned int index);
+
     //Expression validation check. Return "false" if invalid symbol have been founded. If expression valid, "true" result will be returned.
     bool invalidSymbolsExists();
+
     //Removes spaces from the expression.
     void removeSpaces();
+
     //Gives out memmory for operandsArray.
     void createOperandsArray();
+
     //Initializes operandsArray with all uniq values.
     void initializeOperandsArray();
+
     //Calculates the number of uniq operands in expression
     void calculateExpressionArity (TExpression& expression);
+
     //Calculate function result length (2 ^ (number of uniq operands)).
     void calculateFunctionResultStringLength();
 
 public:
     CExpression(TExpression& expression);
+
     //Returns expressionArity.
     static unsigned int getExpressionArity();
+
     //Returns the length of expression.
     static unsigned int getExpressionLength();
+
     //Returns the functionResultSize value.
     static unsigned int getFitnessFunctionLength();
 };

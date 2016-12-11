@@ -5,6 +5,10 @@
 
 #define CONJ 0xFF00
 #define DISJ 0x00FF
+#define BOOL_CONJ true
+#define BOOL_DISJ false
+
+typedef bool TOperation;
 
 class OperatorMatrix : AdjacencyMatrix
 {
