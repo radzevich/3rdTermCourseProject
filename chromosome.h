@@ -5,7 +5,14 @@
 #include "operandsmatrix.h"
 #include "operatormatrix.h"
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
 #define BITS_IN_BYTE 8
 #define CHANCE 4
 
@@ -32,8 +39,16 @@ private:
     //The result of source expression calculation.
     static TFitnessFunction sourceExpressionResult;
 
+<<<<<<< HEAD
     static CExpression *sourceExpression;
 
+=======
+<<<<<<< HEAD
+    static CExpression *sourceExpression;
+
+=======
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
     //The result of the expression  calculation.
     TFitnessFunction fitnessFunction;
 
@@ -72,7 +87,15 @@ public:
     //Disjunct two fitness functions.
     TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
     
+<<<<<<< HEAD
     Chromosome (CExpression *expression);
+=======
+<<<<<<< HEAD
+    Chromosome (CExpression *expression);
+=======
+    Chromosome (CExpression &expression);
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
 
 };
 

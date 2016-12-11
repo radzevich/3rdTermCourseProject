@@ -1,4 +1,11 @@
 #include "adjacencymatrix.h"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+#include "cexpression.h"
+>>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
+>>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
 
 AdjacencyMatrix::AdjacencyMatrix()
 {
