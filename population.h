@@ -18,14 +18,22 @@ private:
 
     static CExpression *sourceExpression;
 
-    void createPopulationList ();
+    unsigned int getPopulationListLength ();
+
+    void initializePopulationList ();
+
+    void removeIndividual (PopulationList *individual);
+
+    PopulationList* selectParents ();
+
+    PopulationList* compareSurvivalChance (float survivalChance);
 
 public:
     PopulationList ();
 
     static CExpression *getSourceExpression ();
 
-    PopulationList* createPoulationList ();
+    PopulationList* createPoulationList (unsigned int population);
 
     void addIndividual (PopulationList *individual);
 };

@@ -14,7 +14,7 @@ PopulationList* PopulationList :: createPoulationList (unsigned int population)
 
     PopulationList *pnt = populationList;
 
-    for (int i = 0; i < population; i++)
+    for (unsigned int i = 0; i < population; i++)
     {
         pnt->next = new PopulationList ();
         pnt = pnt->next;
@@ -42,8 +42,6 @@ unsigned int PopulationList :: getPopulationListLength ()
 
 void PopulationList :: initializePopulationList ()
 {
-    unsigned int PopulationListLength = this->getPopulationListLength ();
-
     PopulationList *pnt = this;
 
     while (pnt->next != NULL)
@@ -85,8 +83,36 @@ void PopulationList :: removeIndividual (PopulationList *individual)
 
 PopulationList* PopulationList :: selectParents ()
 {
-    PopulationList parentsList = createPoulationList (PARENTS_NUM);
+    PopulationList* parentsList = createPoulationList (PARENTS_NUM);
 
+    PopulationList* pnt = this;
 
+    while (pnt->next != NULL)
+    {
+        PopulationList *passPosition = parentsList->compareSurvicalChance (pnt->next->data->getSurvivalChance ());
 
+        if (passPosition != NULL)
+            parentsList->data = pnt->data;
+    }
+
+    return parentsList;
 }
+
+
+PopulationList* PopulationList :: compareSurvivalChance (float survivalChance)
+{
+    PopulationList *populationList = this;
+
+    while (populationList->next != NULL)
+    {
+        if ((NULL == populationList->next->data) || (populationList->next->data->getSurvivalChance () < survivalChance))
+            return populationList->next;
+
+        populationList = populationList->next;
+    }
+
+    return NULL;
+}
+
+
+
