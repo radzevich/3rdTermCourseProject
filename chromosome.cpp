@@ -1,53 +1,36 @@
 #include "chromosome.h"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-#include "cexpression.h"
-#include "adjacencymatrix.h"
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 #include <cstdlib>
 #include <ctime>
 #include <math.h>
 
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
-Chromosome :: Chromosome (CExpression *expression)
+Chromosome :: Chromosome ()
 {
-    this->sourceExpression = expression;
-
-    this->chromosomeSize = 2 * expression->getExpressionLength();
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
-Chromosome :: Chromosome (CExpression &expression)
-{
-    this->chromosomeSize = 2 * expression.getExpressionLength();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+    this->chromosomeSize = 2 * Chromosome :: sourceExpression->getExpressionLength();
 
     this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
 
     this->geneCapacity = sizeof (TGene) * BITS_IN_BYTE;
 
-    initializeChromosome();
-    //Getting memmory for fitness function.
-    this->fitnessFunction = createFitnessFunction();
+    this->survivalChace = this->calculateSurvivalChance ();
 
-    calculateFitnessFunction();
+    initializeChromosome();
+    //Calculating memmory for fitness function.
+    this->fitnessFunction = this->calculateFitnessFunction (0, Chromosome :: sourceExpression->getFitnessFunctionLength() - 1, conjuct);
+}
+
+
+Chromosome :: ~Chromosome ()
+{
+    this->sourceExpression = NULL;
+
+    this->operandsMatrix = NULL;
+
+    this->operatorMatrix = NULL;
+
+    free (this->chromosome);
+
+    free(this->fitnessFunction);
 }
 
 
@@ -83,6 +66,20 @@ TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex,
 }
 
 
+float Chromosome :: calculateSurvivalChance ()
+{
+    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
+
+    float similarity = 0;
+
+    for (unsigned int i = 0; i < fitnessFunctionLength; i++)
+        if (this->fitnessFunction[i] == this->sourceExpressionResult[i])
+            similarity++;
+
+    return (100.0 / survivalChace);
+}
+
+
 unsigned int Chromosome :: getLowPriorityPosition (unsigned int leftIndex, unsigned int rightIndex)
 {
     TCell lowPriority = (unsigned int) round (exp(this->geneCapacity * log (2))) - 1;
@@ -104,37 +101,13 @@ unsigned int Chromosome :: getLowPriorityPosition (unsigned int leftIndex, unsig
 TFitnessFunction Chromosome :: createFitnessFunction()
 {
     //Fitness function creating throw allocating space for it. Returns pointer to this space.
-<<<<<<< HEAD
-    return (TFitnessFunction) calloc (this->sourceExpression->getFitnessFunctionLength(), sizeof(bool));
-=======
-<<<<<<< HEAD
-    return (TFitnessFunction) calloc (this->sourceExpression->getFitnessFunctionLength(), sizeof(bool));
-=======
-<<<<<<< HEAD
-    return (TFitnessFunction) calloc (this->sourceExpression->getFitnessFunctionLength(), sizeof(bool));
-=======
-    return (TFitnessFunction) calloc (CExpression :: getFitnessFunctionLength(), sizeof(bool));
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+    return (TFitnessFunction) calloc (Chromosome :: sourceExpression->getFitnessFunctionLength(), sizeof(bool));
 }
 
 
 TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFunction fun2)
 {
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength ();
     //Two strings conjuction.
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         fun1[i] &= fun2[i];
@@ -147,19 +120,7 @@ TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFuncti
 
 TFitnessFunction Chromosome :: disjunctive (TFitnessFunction fun1, TFitnessFunction fun2)
 {
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength();
-=======
-    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength();
     //Two strings disjunctive.
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         fun1[i] |= fun2[i];
@@ -206,19 +167,7 @@ void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, 
     //Calculating position for fitness function initialize starting.
     unsigned int startPosition;
 
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength ();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength ();
 
     //If operand haven't been inverted, it will be initialized from the (2 ^ operandNumber) position with "true" value.
     //In other way array will be inverted by initializing with "false" value instead of "true".
@@ -236,24 +185,19 @@ void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, 
     }
 }
 
+
 void Chromosome :: initializeEmptyFunction (TFitnessFunction *fitnessFunction, TOperation operation)
 {
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-<<<<<<< HEAD
-    unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
-=======
-    unsigned int fitnessFunctionLength = CExpression :: getFitnessFunctionLength ();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength ();
 
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
         (*fitnessFunction)[i] = operation;
+}
+
+
+float Chromosome :: getSurvivalChance ()
+{
+    return this->survivalChace;
 }
 
 

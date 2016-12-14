@@ -1,35 +1,92 @@
 #include "population.h"
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
-PopulationList :: PopulationList(CExpression *expression)
+PopulationList :: PopulationList ()
 {
-    this->sourceExpression = expression;
+    this->data = NULL;
 
+    this->next = NULL;
 }
 
 
-void PopulationList :: createPopulationList ()
+PopulationList* PopulationList :: createPoulationList (unsigned int population)
 {
+    PopulationList *populationList = new PopulationList ();
 
-    populationList = (TPopulationList*) malloc (sizeof (this->sourceExpression->getFitnessFunctionLength ()));
+    PopulationList *pnt = populationList;
+
+    for (int i = 0; i < population; i++)
+    {
+        pnt->next = new PopulationList ();
+        pnt = pnt->next;
+    }
+
+    return populationList;
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
-Population :: Population()
-{
 
+unsigned int PopulationList :: getPopulationListLength ()
+{
+    PopulationList *pnt = this;
+
+    unsigned int populationListLength = 0;
+
+    while (pnt->next != NULL)
+    {
+        populationListLength++;
+        pnt = pnt->next;
+    }
+
+    return populationListLength;
 }
 
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
+
+void PopulationList :: initializePopulationList ()
+{
+    unsigned int PopulationListLength = this->getPopulationListLength ();
+
+    PopulationList *pnt = this;
+
+    while (pnt->next != NULL)
+    {
+        pnt->next->data = new Chromosome ();
+
+        pnt = pnt->next;
+    }
+}
+
+
+void PopulationList :: addIndividual (PopulationList *individual)
+{
+    PopulationList *pnt = this;
+
+    while (NULL != pnt->next)
+        pnt = pnt->next;
+
+    pnt->next = individual;
+}
+
+
+void PopulationList :: removeIndividual (PopulationList *individual)
+{
+    PopulationList *pnt = this;
+
+    while (pnt->next != individual)
+        pnt = pnt->next;
+
+   PopulationList *tmp = pnt->next;
+
+   pnt->next = pnt->next->next;
+
+   tmp->data->~Chromosome();
+
+   free(tmp);
+}
+
+
+PopulationList* PopulationList :: selectParents ()
+{
+    PopulationList parentsList = createPoulationList (PARENTS_NUM);
+
+
+
+}

@@ -4,87 +4,33 @@
 #include <ctime>
 
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 OperandsMatrix :: OperandsMatrix (CExpression *expression)
 {
     //Construction and initialization
     AdjacencyMatrix ();
 
-    OperandsMatrix :: sourceExpression = expression;
+    this->sourceExpression = expression;
 
     this->operands = expression->getOperandsArray ();
 
     this->setChance (calculateChance ());
 
     initializeField ();
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
-OperandsMatrix::OperandsMatrix (TOperand &operands)
-{
-    //Construction and initialization
-    AdjacencyMatrix();
-    this->operands = &operands;
-    this->setChance (calculateChance());
-    initializeField();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 }
 
 //Returns the part of operand's repeats among others in the operand's field.
 unsigned int OperandsMatrix::calculateChance()
 {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
     return ((OPERAND_FIELD_CAPACITY * OPERAND_FIELD_CAPACITY) % (this->sourceExpression->getExpressionArity() * 2 + 1));
 }
 
 //Initializes all cells of operand's field with random values.
 void OperandsMatrix::initializeField ()
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
-    return ((OPERAND_FIELD_CAPACITY * OPERAND_FIELD_CAPACITY) % (CExpression :: getExpressionArity() * 2 + 1));
-}
-
-//Initializes all cells of operand's field with random values.
-void OperandsMatrix::initializeField()
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 {
     srand(time(NULL));
 
     unsigned int i = 0, j = 0;
-<<<<<<< HEAD
     unsigned int expressionArity = this->sourceExpression->getExpressionArity();
-=======
-<<<<<<< HEAD
-    unsigned int expressionArity = this->sourceExpression->getExpressionArity();
-=======
-<<<<<<< HEAD
-    unsigned int expressionArity = this->sourceExpression->getExpressionArity();
-=======
-    unsigned int expressionArity = CExpression :: getExpressionArity();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
     bool inversionFlag = true;
 
     //Filling cells with random values
@@ -112,19 +58,7 @@ TOperand OperandsMatrix :: getOperandThrowPosition (TCell xCoord, TCell yCoord)
 unsigned int OperandsMatrix :: getOperandNumber (TOperand operand)
 {
     unsigned int position = 0;
-<<<<<<< HEAD
     unsigned int expressionArity = OperandsMatrix :: sourceExpression->getExpressionArity ();
-=======
-<<<<<<< HEAD
-    unsigned int expressionArity = OperandsMatrix :: sourceExpression->getExpressionArity ();
-=======
-<<<<<<< HEAD
-    unsigned int expressionArity = OperandsMatrix :: sourceExpression->getExpressionArity ();
-=======
-    unsigned int expressionArity = CExpression :: getExpressionArity();
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 
     while ((position < expressionArity) & (operand != this->operands[position]))
         position++;

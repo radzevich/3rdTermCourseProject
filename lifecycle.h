@@ -13,16 +13,16 @@ TExpression *getInputExpression();
 class LifeCycle
 {
 private:
-    CExpression _expression;
+    CExpression *_expression;
 
-    OperandsMatrix _operandsMatrix;
+    OperandsMatrix *_operandsMatrix;
 
-    OperatorMatrix _operatorMatrix;
+    OperatorMatrix *_operatorMatrix;
 
-    Population _population;
+    PopulationList *_populationList;
 
 public:
-    LifeCycle (/*CExpression expression*/);
+    LifeCycle (CExpression *expression);
 };
 
 #endif // LIFECYCLE_H

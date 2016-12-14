@@ -5,18 +5,7 @@
 #include "operandsmatrix.h"
 #include "operatormatrix.h"
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 #define BITS_IN_BYTE 8
 #define CHANCE 4
 
@@ -43,21 +32,6 @@ private:
     //The result of source expression calculation.
     static TFitnessFunction sourceExpressionResult;
 
-<<<<<<< HEAD
-    static CExpression *sourceExpression;
-
-=======
-<<<<<<< HEAD
-    static CExpression *sourceExpression;
-
-=======
-<<<<<<< HEAD
-    static CExpression *sourceExpression;
-
-=======
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
     //The result of the expression  calculation.
     TFitnessFunction fitnessFunction;
 
@@ -67,6 +41,8 @@ private:
     //Two-dimensional matrix of randomly spreaded conjunctions and disjunctives.
     //The first value is operation priority, the second - operation type.
     OperatorMatrix *operatorMatrix;
+
+    float survivalChace ;
     
     void initializeChromosome();
     
@@ -86,7 +62,11 @@ private:
 
     void initializeEmptyFunction (TFitnessFunction *fitnessFunction, TOperation operation);
 
+    float calculateSurvivalChance ();
+
 public:
+    static CExpression *sourceExpression;
+
     //Calculate expression result.
     TFitnessFunction calculateFitnessFunction ();
     
@@ -95,21 +75,12 @@ public:
     
     //Disjunct two fitness functions.
     TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
-    
-<<<<<<< HEAD
-    Chromosome (CExpression *expression);
-=======
-<<<<<<< HEAD
-    Chromosome (CExpression *expression);
-=======
-<<<<<<< HEAD
-    Chromosome (CExpression *expression);
-=======
-    Chromosome (CExpression &expression);
->>>>>>> 60419dbe49e5674adf5b4a11c7815d27be15c0ce
->>>>>>> 1f6a959e4363710bf4e322eb8115ae1c9b0355bf
->>>>>>> d32fde80b96b758b74be0618f2443b8cac110716
 
+    float getSurvivalChance ();
+    
+    Chromosome ();
+
+    ~Chromosome ();
 };
 
 

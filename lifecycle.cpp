@@ -1,12 +1,14 @@
 #include "lifecycle.h"
 
-LifeCycle :: LifeCycle (/*CExpression expression*/)
+LifeCycle :: LifeCycle (CExpression *expression)
 {
-    //this->_operandsMatrix = *(new OperandsMatrix (&expression));
+    this->_operandsMatrix = new OperandsMatrix (expression);
 
-    this->_operatorMatrix = *(new OperatorMatrix ());
+    this->_operatorMatrix = new OperatorMatrix ();
 
-    this->_population = *(new Population());
+    Chromosome :: sourceExpression = expression;
+
+    this->_populationList = new PopulationList ();
 }
 
 void initialization()
