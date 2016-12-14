@@ -229,7 +229,9 @@ void Chromosome :: crossBreede (Chromosome *chromosome)
 
     unsigned int breakPoint = rand () % (chromosomeSize - 1) + 1;
 
-    TChromosome bufferChromosome = this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
+    TChromosome sun = (this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene)));
+
+    TChromosome daughter = (this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene)));
 
 
 }
@@ -237,19 +239,29 @@ void Chromosome :: crossBreede (Chromosome *chromosome)
 
 void Chromosome :: initializeBufferChromosome (TChromosome buffer, unsigned int breakPoint)
 {
-    unsigned int position = 0;
-    unsigned int blockNum = 0;
-
-    for ( ; position < breakPoint; position += BITS_IN_BYTE)
-        blockNum++;
 
     position -= breakPoint;
 
     buffer [blockNum - 1] = getInitializeValue (position);
 
     for (unsigned int i = blockNum; i < this->chromosomeSize; i++)
-        buffer[i] |= 0xFFFF;
+    {
+        buffer [i] |= 0xFFFF;
+        buffer [i + this->chromosomeSize] = buffer [i];
+    }
 
+}
+
+
+unsigned int Chromosome :: getBreakedBlockNum (unsigned int position)
+{
+    unsigned int position = 0;
+    unsigned int blockNum = 0;
+
+    for ( ; position < breakPoint; position += BITS_IN_BYTE)
+        blockNum++;
+
+    return blockNum - 1;
 }
 
 
@@ -260,6 +272,38 @@ TGene Chromosome :: getInitializeValue (unsigned int position)
     else
         return 2 * getInitializeValue (position - 1);
 }
+
+
+void Chromosome :: born (TChromosome father, TChromosome sun, TChromosome daughter, unsigned int breakPoint)
+{
+    unsigned int breakedBlock = gerBreakedBlockNum (breakPoint);
+
+    for (int i = 0; i < breakedBlock; i++)
+    {
+        sum [i] = father [i];
+        daughter [i] = this->chromosome [i];
+    }
+
+    for (int i = 0; i < breakedBlock; i++)
+    {
+        sum [i] = this->chromosome [i];
+        daughter [i] = father [i];
+    }
+
+    TGene initalizationValue = getInitializeValue(breakPoint - (breakedBlock * BITS_IN_BYTE));
+    TGene invertedInitializationValue = !initalizationValue;
+
+    TGene fatherHeadValue = father [breakedBlock] & invertedInitializationValue;
+    TGene fatherTailValue = father [breakedBlock] & initalizationValue;
+
+    TGene motherHeadValue = this->chromosome [breakedBlock] & invertedInitializationValue;
+    TGene motherTailValue = this->chromosome [breakedBlock] & initalizationValue;
+
+    sun [breakedBlock] = fatherHeadValue + motherTailValue;
+    daughter [breakedBlock] = motherHeadValue + fatherTailValue;
+}
+
+
 
 
 
