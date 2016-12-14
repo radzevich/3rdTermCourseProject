@@ -1,6 +1,7 @@
 #ifndef LIFECYCLE_H
 #define LIFECYCLE_H
 
+#include <ctime>
 #include "adjacencymatrix.h"
 #include "cexpression.h"
 #include "chromosome.h"

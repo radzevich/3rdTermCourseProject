@@ -201,3 +201,72 @@ float Chromosome :: getSurvivalChance ()
 }
 
 
+void Chromosome :: setCrossBreedingStatus (bool status)
+{
+    this->crossBreeded = status;
+}
+
+
+bool Chromosome :: getCrossBreedingStatus ()
+{
+    return this->crossBreeded;
+}
+
+
+TChromosome Chromosome :: getChromosomeValue ()
+{
+    return this->chromosome;
+}
+
+
+void Chromosome :: crossBreede (Chromosome *chromosome)
+{
+    TChromosome chromosomeValue = chromosome->getChromosomeValue ();
+
+    srand (time (NULL));
+
+    unsigned int chromosomeSize = (this->chromosomeSize * BITS_IN_BYTE);
+
+    unsigned int breakPoint = rand () % (chromosomeSize - 1) + 1;
+
+    TChromosome bufferChromosome = this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
+
+
+}
+
+
+void Chromosome :: initializeBufferChromosome (TChromosome buffer, unsigned int breakPoint)
+{
+    unsigned int position = 0;
+    unsigned int blockNum = 0;
+
+    for ( ; position < breakPoint; position += BITS_IN_BYTE)
+        blockNum++;
+
+    position -= breakPoint;
+
+    buffer [blockNum - 1] = getInitializeValue (position);
+
+    for (unsigned int i = blockNum; i < this->chromosomeSize; i++)
+        buffer[i] |= 0xFFFF;
+
+}
+
+
+TGene Chromosome :: getInitializeValue (unsigned int position)
+{
+    if (1 == position)
+        return 1;
+    else
+        return 2 * getInitializeValue (position - 1);
+}
+
+
+
+
+
+
+
+
+
+

@@ -31,11 +31,14 @@ private:
 public:
     PopulationList ();
 
+    ~PopulationList ();
+
     static CExpression *getSourceExpression ();
 
     PopulationList* createPoulationList (unsigned int population);
 
     void addIndividual (PopulationList *individual);
+
 };
 
 

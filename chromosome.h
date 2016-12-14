@@ -4,6 +4,7 @@
 #include "cexpression.h"
 #include "operandsmatrix.h"
 #include "operatormatrix.h"
+#include <ctime>
 
 
 #define BITS_IN_BYTE 8
@@ -42,7 +43,9 @@ private:
     //The first value is operation priority, the second - operation type.
     OperatorMatrix *operatorMatrix;
 
-    float survivalChace ;
+    float survivalChace;
+
+    bool crossBreeded = false;
     
     void initializeChromosome();
     
@@ -64,6 +67,12 @@ private:
 
     float calculateSurvivalChance ();
 
+    void crossBreede (Chromosome *chromosome);
+
+    void initializeBufferChromosome (TChromosome buffer, unsigned int breakPoint);
+
+    TGene getInitializeValue (unsigned int position);
+
 public:
     static CExpression *sourceExpression;
 
@@ -77,6 +86,13 @@ public:
     TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
 
     float getSurvivalChance ();
+
+    void setCrossBreedingStatus (bool status);
+
+    bool getCrossBreedingStatus ();
+
+
+    TChromosome getChromosomeValue ();
     
     Chromosome ();
 

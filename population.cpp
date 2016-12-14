@@ -8,6 +8,15 @@ PopulationList :: PopulationList ()
 }
 
 
+PopulationList :: ~PopulationList ()
+{
+    if (this->next != NULL)
+        this->next->~PopulationList ();
+
+    free (this);
+}
+
+
 PopulationList* PopulationList :: createPoulationList (unsigned int population)
 {
     PopulationList *populationList = new PopulationList ();
@@ -89,7 +98,7 @@ PopulationList* PopulationList :: selectParents ()
 
     while (pnt->next != NULL)
     {
-        PopulationList *passPosition = parentsList->compareSurvicalChance (pnt->next->data->getSurvivalChance ());
+        PopulationList *passPosition = parentsList->compareSurvivalChance (pnt->next->data->getSurvivalChance ());
 
         if (passPosition != NULL)
             parentsList->data = pnt->data;
@@ -114,5 +123,28 @@ PopulationList* PopulationList :: compareSurvivalChance (float survivalChance)
     return NULL;
 }
 
+/*
+void PopulationList :: crossingOperator (PopulationList* parentsList)
+{
+    PopulationList *pnt;
 
+    while (parentsList->next->next != NULL)
+    {
+        pnt = parentsList->next;
+
+        while (pnt->next != NULL)
+        {
+
+        }
+    }
+}
+
+
+TChromosome crossChromosome (Chromosome father, Chromosome mather)
+{
+    Chromosome chromosome = new Chromosome ();
+
+
+}
+*/
 
