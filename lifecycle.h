@@ -24,6 +24,9 @@ private:
 
 public:
     LifeCycle (CExpression *expression);
+
+    void cycle ();
+
 };
 
 #endif // LIFECYCLE_H

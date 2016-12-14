@@ -234,6 +234,12 @@ TChromosome Chromosome :: getChromosomeValue ()
 }
 
 
+unsigned int Chromosome :: getChromosomeLength ()
+{
+    return this->chromosomeSize;
+}
+
+
 void Chromosome :: crossBreede (Chromosome *chromosome)
 {
     TChromosome chromosomeValue = chromosome->getChromosomeValue ();

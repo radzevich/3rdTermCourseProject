@@ -89,6 +89,8 @@ public:
     //Disjunct two fitness functions.
     TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
 
+    unsigned int getChromosomeLength ();
+
     float getSurvivalChance ();
 
     void setCrossBreedingStatus (bool status);
