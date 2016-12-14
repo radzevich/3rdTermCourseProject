@@ -73,6 +73,16 @@ void PopulationList :: addIndividual (PopulationList *individual)
 }
 
 
+void PopulationList :: addIndividual (TChromosome chromosome)
+{
+    PopulationList *tmp = new PopulationList ();
+
+    tmp->data = new Chromosome (chromosome);
+
+    this->addIndividual(tmp);
+}
+
+
 void PopulationList :: removeIndividual (PopulationList *individual)
 {
     PopulationList *pnt = this;
@@ -122,6 +132,7 @@ PopulationList* PopulationList :: compareSurvivalChance (float survivalChance)
 
     return NULL;
 }
+
 
 /*
 void PopulationList :: crossingOperator (PopulationList* parentsList)

@@ -73,6 +73,10 @@ private:
 
     TGene getInitializeValue (unsigned int position);
 
+    unsigned int getBreakedBlockNum (unsigned int position);
+
+    void born (TChromosome father, TChromosome sun, TChromosome daughter, unsigned int breakPoint);
+
 public:
     static CExpression *sourceExpression;
 
@@ -95,6 +99,8 @@ public:
     TChromosome getChromosomeValue ();
     
     Chromosome ();
+
+    Chromosome (TChromosome chromosome);
 
     ~Chromosome ();
 };

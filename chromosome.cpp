@@ -20,6 +20,21 @@ Chromosome :: Chromosome ()
 }
 
 
+Chromosome :: Chromosome (TChromosome chromosome)
+{
+    this->chromosomeSize = 2 * Chromosome :: sourceExpression->getExpressionLength();
+
+    this->chromosome = chromosome;
+
+    this->geneCapacity = sizeof (TGene) * BITS_IN_BYTE;
+
+    this->survivalChace = this->calculateSurvivalChance ();
+
+    //Calculating memmory for fitness function.
+    this->fitnessFunction = this->calculateFitnessFunction (0, Chromosome :: sourceExpression->getFitnessFunctionLength() - 1, conjuct);
+}
+
+
 Chromosome :: ~Chromosome ()
 {
     this->sourceExpression = NULL;
@@ -237,23 +252,7 @@ void Chromosome :: crossBreede (Chromosome *chromosome)
 }
 
 
-void Chromosome :: initializeBufferChromosome (TChromosome buffer, unsigned int breakPoint)
-{
-
-    position -= breakPoint;
-
-    buffer [blockNum - 1] = getInitializeValue (position);
-
-    for (unsigned int i = blockNum; i < this->chromosomeSize; i++)
-    {
-        buffer [i] |= 0xFFFF;
-        buffer [i + this->chromosomeSize] = buffer [i];
-    }
-
-}
-
-
-unsigned int Chromosome :: getBreakedBlockNum (unsigned int position)
+unsigned int Chromosome :: getBreakedBlockNum (unsigned int breakPoint)
 {
     unsigned int position = 0;
     unsigned int blockNum = 0;
@@ -276,17 +275,17 @@ TGene Chromosome :: getInitializeValue (unsigned int position)
 
 void Chromosome :: born (TChromosome father, TChromosome sun, TChromosome daughter, unsigned int breakPoint)
 {
-    unsigned int breakedBlock = gerBreakedBlockNum (breakPoint);
+    unsigned int breakedBlock = getBreakedBlockNum (breakPoint);
 
-    for (int i = 0; i < breakedBlock; i++)
+    for (unsigned int i = 0; i < breakedBlock; i++)
     {
-        sum [i] = father [i];
+        sun [i] = father [i];
         daughter [i] = this->chromosome [i];
     }
 
-    for (int i = 0; i < breakedBlock; i++)
+    for (unsigned int i = 0; i < breakedBlock; i++)
     {
-        sum [i] = this->chromosome [i];
+        sun [i] = this->chromosome [i];
         daughter [i] = father [i];
     }
 

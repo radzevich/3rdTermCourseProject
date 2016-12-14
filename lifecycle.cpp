@@ -97,6 +97,53 @@ float LifeCycle :: getTotalChanceValue (PopulationList *populationList)
 }
 
 
+void LifeCycle :: CrossBreed (PopulationList *populationList)
+{
+    PopulationList *pnt = populationList;
+
+    PopulationList *father;
+
+    while (pnt->next != NULL)
+        if (!pnt->next->data->getCrossBreedingStatus ())
+        {
+            father = getRandomIndividual (pnt);
+
+            pnt = pnt->next;
+
+            father->data->setCrossBreedingStatus (true);
+
+            pnt->data->crossBreeded = true;
+        }
+    }
+
+    TChromosome sun =  (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
+
+    TChromosome daughter = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
+
+}
+
+
+PopulationList* LifeCycle :: getRandomIndividual (PopulationList *populationList)
+{
+    PopulationList *pnt;
+
+    unsigned int populationListLength = populationList->getPopulationListLength ();
+    unsigned int repeats;
+
+    while (true)
+    {
+        pnt = populationList;
+        repeats = rand () % populationListLength;
+
+        for (unsigned int i = 0; i < repeats; i++)
+            pnt = pnt->next;
+
+        if (!pnt->next->data->getCrossBreedingStatus ())
+            return pnt->next;
+    }
+
+
+}
 
 
 

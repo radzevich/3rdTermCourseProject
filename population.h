@@ -39,6 +39,7 @@ public:
 
     void addIndividual (PopulationList *individual);
 
+    void addIndividual (TChromosome chromosome);
 };
 
 
