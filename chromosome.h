@@ -30,9 +30,6 @@ private:
     //The amount of values chromosome can consist.
     unsigned int geneCapacity;
 
-    //The result of source expression calculation.
-    static TFitnessFunction sourceExpressionResult;
-
     //The result of the expression  calculation.
     TFitnessFunction fitnessFunction;
 
@@ -80,7 +77,7 @@ private:
     void born (TChromosome parent, TChromosome child, unsigned int breakPoint);
 
 public:
-    static CExpression *sourceExpression;
+    CExpression *sourceExpression;
 
     //Calculate expression result.
     TFitnessFunction calculateFitnessFunction ();
@@ -103,6 +100,8 @@ public:
     TChromosome getChromosomeValue ();
     
     Chromosome ();
+
+    Chromosome (CExpression *expression);
 
     Chromosome (TChromosome chromosome);
 

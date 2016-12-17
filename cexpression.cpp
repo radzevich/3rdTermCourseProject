@@ -122,8 +122,11 @@ TOperand *CExpression::getOperandsArray()
     return this->operandsArray;
 }
 
+TFitnessFunction CExpression :: getSourceExpressionResult ()
+{
+    return this->expressionResult;
+}
 
 int main()
 {
-
 }

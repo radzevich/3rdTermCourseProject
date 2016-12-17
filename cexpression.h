@@ -29,6 +29,9 @@ private:
     //Length of function result equal to 2 ^ (number of uniq operands) ~ legnth of fitness function.
     unsigned int functionResultSize;
 
+    //The result of source expression calculation.
+    TFitnessFunction expressionResult;
+
     //Returns operand's name according to it's position in operansArray.
     TOperand getOperandThrowIndex (unsigned int index);
 
@@ -62,6 +65,7 @@ public:
     //Returns the functionResultSize value.
     unsigned int getFitnessFunctionLength();
 
+    TFitnessFunction getSourceExpressionResult ();
 
     TExpression *getExpression ();
 

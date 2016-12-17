@@ -20,6 +20,14 @@ Chromosome :: Chromosome ()
 }
 
 
+Chromosome :: Chromosome (CExpression *expression)
+{
+    this->sourceExpression = expression;
+
+    Chromosome ();
+}
+
+
 Chromosome :: Chromosome (TChromosome chromosome)
 {
     this->chromosomeSize = 2 * Chromosome :: sourceExpression->getExpressionLength();
@@ -37,9 +45,9 @@ Chromosome :: Chromosome (TChromosome chromosome)
 
 Chromosome :: ~Chromosome ()
 {
-    this->sourceExpression = NULL;
-
     this->operandsMatrix = NULL;
+
+    this->sourceExpression = NULL;
 
     this->operatorMatrix = NULL;
 
@@ -83,12 +91,13 @@ TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex,
 
 float Chromosome :: calculateSurvivalChance ()
 {
+    TFitnessFunction sourceFitnessFunction = this->sourceExpression->getSourceExpressionResult();
     unsigned int fitnessFunctionLength = this->sourceExpression->getFitnessFunctionLength ();
 
     float similarity = 0;
 
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
-        if (this->fitnessFunction[i] == Chromosome :: sourceExpressionResult[i])
+        if (this->fitnessFunction [i] == sourceFitnessFunction [i])
             similarity++;
 
     return (100.0 / survivalChace);

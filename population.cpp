@@ -1,5 +1,32 @@
 #include "population.h"
 
+
+PopulationList* createPoulationList (unsigned int population)
+{
+    PopulationList *populationList = new PopulationList ();
+
+    PopulationList *pnt = populationList;
+
+    for (unsigned int i = 0; i < population; i++)
+    {
+        pnt->setNext (new PopulationList ());
+        pnt = pnt->getNext ();
+    }
+
+    return populationList;
+}
+
+
+PopulationList* createInitializedPopulationList (unsigned int population)
+{
+    PopulationList *sourcePopulation = createPoulationList (population);
+
+    sourcePopulation->initializePopulationList ();
+
+    return sourcePopulation;
+}
+
+
 PopulationList :: PopulationList ()
 {
     this->data = NULL;
@@ -17,19 +44,15 @@ PopulationList :: ~PopulationList ()
 }
 
 
-PopulationList* PopulationList :: createPoulationList (unsigned int population)
+PopulationList* PopulationList :: getNext ()
 {
-    PopulationList *populationList = new PopulationList ();
+    return this->next;
+}
 
-    PopulationList *pnt = populationList;
 
-    for (unsigned int i = 0; i < population; i++)
-    {
-        pnt->next = new PopulationList ();
-        pnt = pnt->next;
-    }
-
-    return populationList;
+void PopulationList :: setNext (PopulationList *next)
+{
+    this->next = next;
 }
 
 
@@ -56,7 +79,6 @@ void PopulationList :: initializePopulationList ()
     while (pnt->next != NULL)
     {
         pnt->next->data = new Chromosome ();
-
         pnt = pnt->next;
     }
 }
@@ -160,33 +182,22 @@ TChromosome crossChromosome (Chromosome father, Chromosome mather)
 */
 
 
-PopulationList* PopulationList :: createSourcePopulationList (unsigned int population)
+
+void PopulationList :: reproducePopulation ()
 {
-    PopulationList *sourcePopulation = new PopulationList ();
+    float chance = getTotalChanceValue ();
 
-    sourcePopulation->createPoulationList (population);
-
-    return sourcePopulation;
-}
-
-
-PopulationList* PopulationList :: reproducePopulation (PopulationList *populationList)
-{
-    float chance = getTotalChanceValue (populationList);
-
-    PopulationList *pnt = populationList;
+    PopulationList *pnt = this;
 
     while (pnt->next != NULL)
     {
-        pnt->next->data = selectReproducingItem (populationList, chance);
+        pnt->next->data = selectReproducingItem (chance);
         pnt = pnt->next;
     }
-
-    return populationList;
 }
 
 
-Chromosome* PopulationList :: selectReproducingItem (PopulationList *populationList, float totalSurvivalChance)
+Chromosome* PopulationList :: selectReproducingItem (float totalSurvivalChance)
 {
     srand (time (NULL));
 
@@ -194,9 +205,9 @@ Chromosome* PopulationList :: selectReproducingItem (PopulationList *populationL
 
     float sumChance;
 
-    PopulationList *pnt = populationList;
+    PopulationList *pnt = this;
 
-    while ((resultChance > sumChance ) & (populationList->next != NULL))
+    while ((resultChance > sumChance ) & (pnt->next != NULL))
     {
         pnt = pnt->next;
         sumChance += (pnt->data->getSurvivalChance ()) * 100;
@@ -206,64 +217,18 @@ Chromosome* PopulationList :: selectReproducingItem (PopulationList *populationL
 }
 
 
-float PopulationList :: getTotalChanceValue (PopulationList *populationList)
+float PopulationList :: getTotalChanceValue ()
 {
     float chance = 0;
 
-    while (populationList->next != NULL)
+    PopulationList *pnt = this;
+
+    while (pnt->next != NULL)
     {
-        chance += populationList->next->data->getSurvivalChance ();
-        populationList = populationList->next;
+        chance += pnt->next->data->getSurvivalChance ();
+        pnt = pnt->next;
     }
 
     return chance;
-}
-
-
-void PopulationList :: CrossBreed (PopulationList *populationList)
-{
-    PopulationList *pnt = populationList;
-
-    PopulationList *father;
-
-    while (pnt->next != NULL)
-        if (!pnt->next->data->getCrossBreedingStatus ())
-        {
-            father = getRandomIndividual (pnt);
-
-            pnt = pnt->next;
-
-            father->data->setCrossBreedingStatus (true);
-
-            pnt->data->setCrossBreedingStatus (true);
-        }
-
-    TChromosome sun =  (TChromosome) calloc (this->data->getChromosomeLength (), sizeof (TGene));
-
-    TChromosome daughter = (TChromosome) calloc (this->data->getChromosomeLength (), sizeof (TGene));
-
-}
-
-
-PopulationList* PopulationList :: getRandomIndividual (PopulationList *populationList)
-{
-    PopulationList *pnt;
-
-    unsigned int populationListLength = populationList->getPopulationListLength ();
-    unsigned int repeats;
-
-    while (true)
-    {
-        pnt = populationList;
-        repeats = rand () % populationListLength;
-
-        for (unsigned int i = 0; i < repeats; i++)
-            pnt = pnt->next;
-
-        if (!pnt->next->data->getCrossBreedingStatus ())
-            return pnt->next;
-    }
-
-
 }
 

@@ -7,8 +7,6 @@ LifeCycle :: LifeCycle (CExpression *expression)
 
     this->_operatorMatrix = new OperatorMatrix ();
 
-    Chromosome :: sourceExpression = expression;
-
     this->_populationList = new PopulationList ();
 }
 
@@ -20,17 +18,14 @@ void initialization()
 
 void LifeCycle :: cycle ()
 {
-    PopulationList *sourcePosulationList = NULL;//createSourcePopulationList (POPULATION);
+    PopulationList *population = createInitializedPopulationList (POPULATION);
 
-    sourcePosulationList->initializePopulationList ();
+    population->initializePopulationList ();
 
-    PopulationList *reproducedPopulationList = NULL;//reproducePopulation (sourcePosulationList);
-
-    sourcePosulationList->~PopulationList ();
-
-
+    population->reproducePopulation();
 
 }
+
 
 
 

@@ -27,15 +27,11 @@ private:
 
     PopulationList* compareSurvivalChance (float survivalChance);
 
-    PopulationList* createSourcePopulationList (unsigned int population);
-
-    PopulationList* reproducePopulation (PopulationList *populationList);
-
     PopulationList* getRandomIndividual (PopulationList *populationList);
 
-    Chromosome* selectReproducingItem (PopulationList *populationList, float totalSurvivalChance);
+    Chromosome* selectReproducingItem (float totalSurvivalChance);
 
-    float getTotalChanceValue (PopulationList *populationList);
+    float getTotalChanceValue ();
 
     void  CrossBreed (PopulationList *populationList);
 
@@ -44,9 +40,11 @@ public:
 
     ~PopulationList ();
 
-    static CExpression *getSourceExpression ();
+    PopulationList* getNext ();
 
-    PopulationList* createPoulationList (unsigned int population);
+    void setNext (PopulationList* next);
+
+    static CExpression *getSourceExpression ();
 
     void addIndividual (PopulationList *individual);
 
@@ -54,8 +52,12 @@ public:
 
     void initializePopulationList ();
 
-
+    void reproducePopulation ();
 };
+
+PopulationList* createPoulationList (unsigned int population);
+
+PopulationList* createInitializedPopulationList (unsigned int population);
 
 
 
