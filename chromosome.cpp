@@ -249,19 +249,19 @@ unsigned int Chromosome :: getChromosomeLength ()
 }
 
 
-TChromosome Chromosome :: crossBreede (Chromosome *chromosome)
+TChromosome Chromosome :: crossBreede (Chromosome *father, Chromosome *mather)
 {
-    TChromosome chromosomeValue = chromosome->getChromosomeValue ();
+    //TChromosome chromosomeValue = chromosome->getChromosomeValue ();
 
     srand (time (NULL));
 
-    unsigned int chromosomeSizeInBits = (this->chromosomeSize * BITS_IN_BYTE);
+    unsigned int chromosomeSizeInBits = (father->getChromosomeLength () * BITS_IN_BYTE);
 
     unsigned int breakPoint = rand () % (chromosomeSizeInBits - 1) + 1;
 
-    TChromosome child = (this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene)));
+    TChromosome child = (TChromosome) calloc (chromosomeSizeInBits / BITS_IN_BYTE, sizeof (TGene));
 
-    this->born(chromosomeValue, child, breakPoint);
+    mather->born(father->getChromosomeValue (), child, breakPoint);
 
     return child;
 }

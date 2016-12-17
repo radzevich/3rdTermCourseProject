@@ -42,6 +42,8 @@ public:
 
     PopulationList* getNext ();
 
+    PopulationList *getItemThrowIndex (unsigned int index);
+
     void setNext (PopulationList* next);
 
     static CExpression *getSourceExpression ();
@@ -53,6 +55,8 @@ public:
     void initializePopulationList ();
 
     void reproducePopulation ();
+
+    void CrossBreedOperator ();
 };
 
 PopulationList* createPoulationList (unsigned int population);

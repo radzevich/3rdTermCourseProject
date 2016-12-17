@@ -64,8 +64,6 @@ private:
 
     float calculateSurvivalChance ();
 
-    TChromosome crossBreede (Chromosome *chromosome);
-
     void initializeBufferChromosome (TChromosome buffer, unsigned int breakPoint);
 
     TGene getInitializeValue (unsigned int position);
@@ -87,6 +85,8 @@ public:
     
     //Disjunct two fitness functions.
     TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
+
+    static TChromosome crossBreede (Chromosome *father, Chromosome *mather);
 
     unsigned int getChromosomeLength ();
 

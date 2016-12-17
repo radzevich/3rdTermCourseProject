@@ -1,6 +1,7 @@
 #include "population.h"
 
 
+
 PopulationList* createPoulationList (unsigned int population)
 {
     PopulationList *populationList = new PopulationList ();
@@ -101,6 +102,8 @@ void PopulationList :: addIndividual (TChromosome chromosome)
 
     tmp->data = new Chromosome (chromosome);
 
+    tmp->data->setCrossBreedingStatus (true);
+
     this->addIndividual(tmp);
 }
 
@@ -156,33 +159,6 @@ PopulationList* PopulationList :: compareSurvivalChance (float survivalChance)
 }
 
 
-/*
-void PopulationList :: crossingOperator (PopulationList* parentsList)
-{
-    PopulationList *pnt;
-
-    while (parentsList->next->next != NULL)
-    {
-        pnt = parentsList->next;
-
-        while (pnt->next != NULL)
-        {
-
-        }
-    }
-}
-
-
-TChromosome crossChromosome (Chromosome father, Chromosome mather)
-{
-    Chromosome chromosome = new Chromosome ();
-
-
-}
-*/
-
-
-
 void PopulationList :: reproducePopulation ()
 {
     float chance = getTotalChanceValue ();
@@ -230,5 +206,47 @@ float PopulationList :: getTotalChanceValue ()
     }
 
     return chance;
+}
+
+
+//*******************************************************Cross*breed*****************************************************
+
+void PopulationList :: CrossBreedOperator ()
+{
+    srand (time (NULL));
+    unsigned int index = rand () % POPULATION;
+
+    for (unsigned int i = 0; i < (POPULATION >> 1); i++)
+    {
+        PopulationList *mother = this->getItemThrowIndex (index);
+        mother->data->setCrossBreedingStatus (true);
+
+        PopulationList *father = this->getItemThrowIndex (index);
+        father->data->setCrossBreedingStatus (true);
+
+        this->addIndividual (Chromosome :: crossBreede (father->data, mother->data));
+    }
+}
+
+
+PopulationList *PopulationList :: getItemThrowIndex (unsigned int index)
+{
+    unsigned int i = 0;
+
+    PopulationList *pnt = this;
+
+    while (true)
+    {
+        if (pnt->next != NULL)
+            if ((i >= index) & (!pnt->next->data->getCrossBreedingStatus ()))
+                return pnt->next;
+            else
+            {
+                i++;
+                pnt = pnt->next;
+            }
+         else
+            pnt = this;
+    }
 }
 
