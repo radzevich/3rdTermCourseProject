@@ -104,6 +104,8 @@ void PopulationList :: addIndividual (TChromosome chromosome)
 
     tmp->data->setCrossBreedingStatus (true);
 
+    tmp->data->mutationOperator ();
+
     this->addIndividual(tmp);
 }
 
@@ -209,7 +211,7 @@ float PopulationList :: getTotalChanceValue ()
 }
 
 
-//*******************************************************Cross*breed*****************************************************
+//*******************************************************Crossing_over*******************************************************
 
 void PopulationList :: CrossBreedOperator ()
 {
@@ -249,4 +251,3 @@ PopulationList *PopulationList :: getItemThrowIndex (unsigned int index)
             pnt = this;
     }
 }
-

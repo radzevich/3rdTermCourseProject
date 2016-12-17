@@ -67,6 +67,12 @@ void Chromosome :: initializeChromosome()
 }
 
 
+void Chromosome :: SetGene (TGene newValue, unsigned int changePosition)
+{
+    this->chromosome [changePosition] = newValue;
+}
+
+
 TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex, unsigned int rightIndex, TOperation operation)
 {
     TFitnessFunction fitnessFunction = createFitnessFunction();
@@ -308,6 +314,23 @@ void Chromosome :: born (TChromosome parent, TChromosome child, unsigned int bre
         child [i] = parent [i];
 }
 
+
+void Chromosome :: mutationOperator()
+{
+    srand (time (NULL));
+
+    if  (0 == rand () % MUTATION_CHANCE)
+    {
+        unsigned int mutatingPosition = this->getBreakedBlockNum (rand () % this->chromosomeSize * BITS_IN_BYTE);
+
+        TGene mask = 1 << (mutatingPosition % BITS_IN_BYTE);
+
+        if (0 == (this->chromosome [mutatingPosition] & mask))
+             this->chromosome [mutatingPosition] |= mask;
+        else
+             this->chromosome [mutatingPosition] ^= mask;
+    }
+}
 
 
 

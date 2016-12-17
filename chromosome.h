@@ -9,6 +9,7 @@
 
 #define BITS_IN_BYTE 8
 #define CHANCE 4
+#define MUTATION_CHANCE 300
 
 #define X_OPERAND_COORD 0
 #define Y_OPERAND_COORD 1
@@ -93,6 +94,10 @@ public:
     float getSurvivalChance ();
 
     void setCrossBreedingStatus (bool status);
+
+    void mutationOperator();
+
+    void SetGene (TGene newValue, unsigned int changePosition);
 
     bool getCrossBreedingStatus ();
 
