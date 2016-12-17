@@ -67,15 +67,17 @@ private:
 
     float calculateSurvivalChance ();
 
-    void crossBreede (Chromosome *chromosome);
+    TChromosome crossBreede (Chromosome *chromosome);
 
     void initializeBufferChromosome (TChromosome buffer, unsigned int breakPoint);
 
     TGene getInitializeValue (unsigned int position);
 
+    TGene crossGenes (TGene gene1, TGene gene2, unsigned int breakPoint);
+
     unsigned int getBreakedBlockNum (unsigned int position);
 
-    void born (TChromosome father, TChromosome sun, TChromosome daughter, unsigned int breakPoint);
+    void born (TChromosome parent, TChromosome child, unsigned int breakPoint);
 
 public:
     static CExpression *sourceExpression;

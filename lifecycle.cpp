@@ -20,11 +20,11 @@ void initialization()
 
 void LifeCycle :: cycle ()
 {
-    PopulationList *sourcePosulationList = createSourcePopulationList (POPULATION);
+    PopulationList *sourcePosulationList = NULL;//createSourcePopulationList (POPULATION);
 
     sourcePosulationList->initializePopulationList ();
 
-    PopulationList *reproducedPopulationList = reproducePopulation (sourcePosulationList);
+    PopulationList *reproducedPopulationList = NULL;//reproducePopulation (sourcePosulationList);
 
     sourcePosulationList->~PopulationList ();
 

@@ -88,7 +88,7 @@ float Chromosome :: calculateSurvivalChance ()
     float similarity = 0;
 
     for (unsigned int i = 0; i < fitnessFunctionLength; i++)
-        if (this->fitnessFunction[i] == this->sourceExpressionResult[i])
+        if (this->fitnessFunction[i] == Chromosome :: sourceExpressionResult[i])
             similarity++;
 
     return (100.0 / survivalChace);
@@ -240,30 +240,29 @@ unsigned int Chromosome :: getChromosomeLength ()
 }
 
 
-void Chromosome :: crossBreede (Chromosome *chromosome)
+TChromosome Chromosome :: crossBreede (Chromosome *chromosome)
 {
     TChromosome chromosomeValue = chromosome->getChromosomeValue ();
 
     srand (time (NULL));
 
-    unsigned int chromosomeSize = (this->chromosomeSize * BITS_IN_BYTE);
+    unsigned int chromosomeSizeInBits = (this->chromosomeSize * BITS_IN_BYTE);
 
-    unsigned int breakPoint = rand () % (chromosomeSize - 1) + 1;
+    unsigned int breakPoint = rand () % (chromosomeSizeInBits - 1) + 1;
 
-    TChromosome sun = (this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene)));
+    TChromosome child = (this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene)));
 
-    TChromosome daughter = (this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene)));
+    this->born(chromosomeValue, child, breakPoint);
 
-
+    return child;
 }
 
 
 unsigned int Chromosome :: getBreakedBlockNum (unsigned int breakPoint)
 {
-    unsigned int position = 0;
     unsigned int blockNum = 0;
 
-    for ( ; position < breakPoint; position += BITS_IN_BYTE)
+    for (unsigned int position = 0; position < breakPoint; position += BITS_IN_BYTE)
         blockNum++;
 
     return blockNum - 1;
@@ -279,33 +278,25 @@ TGene Chromosome :: getInitializeValue (unsigned int position)
 }
 
 
-void Chromosome :: born (TChromosome father, TChromosome sun, TChromosome daughter, unsigned int breakPoint)
+TGene Chromosome :: crossGenes (TGene gene1, TGene gene2, unsigned int breakPoint)
+{
+    TGene binaryMask = getInitializeValue (breakPoint % BITS_IN_BYTE);
+
+    return (gene2 & binaryMask) + (gene1 & (binaryMask ^ 0xFF));
+}
+
+
+void Chromosome :: born (TChromosome parent, TChromosome child, unsigned int breakPoint)
 {
     unsigned int breakedBlock = getBreakedBlockNum (breakPoint);
 
     for (unsigned int i = 0; i < breakedBlock; i++)
-    {
-        sun [i] = father [i];
-        daughter [i] = this->chromosome [i];
-    }
+        child [i] = this->chromosome [i];
 
-    for (unsigned int i = 0; i < breakedBlock; i++)
-    {
-        sun [i] = this->chromosome [i];
-        daughter [i] = father [i];
-    }
+    child [breakedBlock] = crossGenes (this->chromosome [breakedBlock], parent [breakedBlock], breakPoint);
 
-    TGene initalizationValue = getInitializeValue(breakPoint - (breakedBlock * BITS_IN_BYTE));
-    TGene invertedInitializationValue = !initalizationValue;
-
-    TGene fatherHeadValue = father [breakedBlock] & invertedInitializationValue;
-    TGene fatherTailValue = father [breakedBlock] & initalizationValue;
-
-    TGene motherHeadValue = this->chromosome [breakedBlock] & invertedInitializationValue;
-    TGene motherTailValue = this->chromosome [breakedBlock] & initalizationValue;
-
-    sun [breakedBlock] = fatherHeadValue + motherTailValue;
-    daughter [breakedBlock] = motherHeadValue + fatherTailValue;
+    for (unsigned int i = breakedBlock + 1; i < this->chromosomeSize; i++)
+        child [i] = parent [i];
 }
 
 
