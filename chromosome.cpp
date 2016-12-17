@@ -106,7 +106,7 @@ float Chromosome :: calculateSurvivalChance ()
         if (this->fitnessFunction [i] == sourceFitnessFunction [i])
             similarity++;
 
-    return (100.0 / survivalChace);
+    return similarity / ((float) fitnessFunctionLength);
 }
 
 
@@ -330,6 +330,15 @@ void Chromosome :: mutationOperator()
         else
              this->chromosome [mutatingPosition] ^= mask;
     }
+}
+
+TExpression *Chromosome :: transformChromosomeToExpression()
+{
+    TExpression expression;
+
+    //There will be transformation code.
+
+    return &expression;
 }
 
 

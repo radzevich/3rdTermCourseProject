@@ -87,6 +87,8 @@ public:
     //Disjunct two fitness functions.
     TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
 
+    TExpression *transformChromosomeToExpression();
+
     static TChromosome crossBreede (Chromosome *father, Chromosome *mather);
 
     unsigned int getChromosomeLength ();

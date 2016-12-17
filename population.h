@@ -21,7 +21,7 @@ private:
 
     unsigned int getPopulationListLength ();
 
-    void removeIndividual (PopulationList *individual);
+    void removeIndividual ();
 
     PopulationList* selectParents ();
 
@@ -44,6 +44,10 @@ public:
 
     PopulationList *getItemThrowIndex (unsigned int index);
 
+    PopulationList *lookForResults ();
+
+    Chromosome *getChromosome ();
+
     void setNext (PopulationList* next);
 
     static CExpression *getSourceExpression ();
@@ -57,6 +61,10 @@ public:
     void reproducePopulation ();
 
     void CrossBreedOperator ();
+
+    void reducePopulation ();
+
+    float getLowerSurvivalChance ();
 };
 
 PopulationList* createPoulationList (unsigned int population);

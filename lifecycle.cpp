@@ -24,7 +24,14 @@ void LifeCycle :: cycle ()
 
     population->reproducePopulation();
 
+    population->CrossBreedOperator();
 
+    population->reducePopulation();
+
+    PopulationList *result = population->lookForResults ();
+
+    if (result != NULL)
+        TExpression *expression = result->getChromosome ()->transformChromosomeToExpression ();
 
 }
 

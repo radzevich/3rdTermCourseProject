@@ -110,20 +110,15 @@ void PopulationList :: addIndividual (TChromosome chromosome)
 }
 
 
-void PopulationList :: removeIndividual (PopulationList *individual)
+void PopulationList :: removeIndividual ()
 {
-    PopulationList *pnt = this;
+   PopulationList *pnt = this;
 
-    while (pnt->next != individual)
-        pnt = pnt->next;
+   this->next = this->next->next;
 
-   PopulationList *tmp = pnt->next;
+   pnt->data->~Chromosome();
 
-   pnt->next = pnt->next->next;
-
-   tmp->data->~Chromosome();
-
-   free(tmp);
+   free(pnt);
 }
 
 
@@ -194,6 +189,11 @@ Chromosome* PopulationList :: selectReproducingItem (float totalSurvivalChance)
     return pnt->data;
 }
 
+Chromosome *PopulationList :: getChromosome ()
+{
+    return this->data;
+}
+
 
 float PopulationList :: getTotalChanceValue ()
 {
@@ -251,3 +251,86 @@ PopulationList *PopulationList :: getItemThrowIndex (unsigned int index)
             pnt = this;
     }
 }
+
+//******************************************************************************************************************************
+
+void PopulationList :: reducePopulation ()
+{
+    PopulationList *pnt = this;
+
+    PopulationList *endangered;
+
+    float lowerSurvivalChance;
+
+    for (int i = (POPULATION - this->getPopulationListLength ()); i > 0; i--)
+    {
+        endangered = this;
+        lowerSurvivalChance = pnt->next->data->getSurvivalChance ();
+
+        while (pnt->next != NULL)
+        {
+            if (pnt->next->data->getSurvivalChance () < lowerSurvivalChance)
+            {
+                lowerSurvivalChance = pnt->next->data->getSurvivalChance ();
+                endangered = pnt;
+            }
+            pnt = pnt->next;
+        }
+        endangered->removeIndividual ();
+    }
+}
+
+
+/*float PopulationList :: getLowerSurvivalChance ()
+{
+    PopulationList *pnt;
+
+    float maximumSurvivalChance = 1, iterationMaximumSurvivalChance, survivalChance;
+
+    unsigned int repeatCounter;
+
+    for (unsigned int i = 0; i < POPULATION; i++)
+    {
+        iterationMaximumSurvivalChance = 0;
+        repeatCounter = 0;
+        pnt = this;
+
+        while (pnt->next != NULL)
+        {
+            survivalChance = pnt->data->getSurvivalChance ();
+
+            if (survivalChance = currentSurvivalChance)
+                repeatCounter++;
+            else if ((survivalChance > iterationMaximumSurvivalChance) & (survivalChance < maximumSurvivalChance))
+            {
+                repeatCounter = 0;
+                iterationMaximumSurvivalChance = survivalChance;
+            }
+
+            pnt = pnt->next;
+        }
+
+        maximumSurvivalChance = iterationMaximumSurvivalChance;
+
+        i += repeatCounter;
+    }
+
+    return maximumSurvivalChance;
+}*/
+
+
+PopulationList *PopulationList :: lookForResults ()
+{
+    PopulationList *pnt = this;
+
+    while (pnt->next != NULL)
+    {
+        if (1 - (pnt->next->data->getSurvivalChance ()) < 0.001)
+            return pnt->next;
+
+        pnt = pnt->next;
+    }
+
+    return NULL;
+}
+
