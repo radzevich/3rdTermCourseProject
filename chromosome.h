@@ -2,12 +2,9 @@
 #define CHROMOSOME_H
 
 #include "cexpression.h"
+#include "global.h"
 #include "operandsmatrix.h"
 #include "operatormatrix.h"
-#include "chromosome.h"
-#include "global.h"
-#include <ctime>
-
 
 #define BITS_IN_BYTE 8
 #define CHANCE 4
@@ -31,17 +28,17 @@ private:
     unsigned int chromosomeSize = 0;
 
     //The amount of values chromosome can consist.
-    unsigned int geneCapacity;
+    //unsigned int geneCapacity;
 
     //The result of the expression  calculation.
     TFitnessFunction fitnessFunction;
 
     //Two-dimensional matrix, consisting of randomly spreaded operands of source expression.
-    //OperandsMatrix *operandsMatrix;
+    OperandsMatrix *operandsMatrix;
 
     //Two-dimensional matrix of randomly spreaded conjunctions and disjunctives.
     //The first value is operation priority, the second - operation type.
-    //OperatorMatrix *operatorMatrix;
+    OperatorMatrix *operatorMatrix;
 
     float survivalChace;
 
@@ -110,9 +107,9 @@ public:
     
     Chromosome ();
 
-    Chromosome (CExpression *expression);
+    Chromosome (CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix);
 
-    Chromosome (TChromosome chromosome);
+    Chromosome (TChromosome chromosome, CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix);
 
     ~Chromosome ();
 };

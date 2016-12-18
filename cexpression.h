@@ -5,11 +5,13 @@
 //#include "operandsmatrix.h"
 //#include "operatormatrix.h"
 
+#include "global.h"
+
 #define BLOCK_SIZE 1
 
 typedef std::string TExpression;
 typedef bool* TFitnessFunction;
-typedef unsigned char TOperand;
+
 
 
 class CExpression

@@ -2,7 +2,7 @@
 
 
 
-PopulationList* createPoulationList (unsigned int population)
+PopulationList* createPoulationList (unsigned int population, CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix)
 {
     PopulationList *populationList = new PopulationList ();
 
@@ -11,16 +11,23 @@ PopulationList* createPoulationList (unsigned int population)
     for (unsigned int i = 0; i < population; i++)
     {
         pnt->setNext (new PopulationList ());
+
         pnt = pnt->getNext ();
+
+        pnt->setExpression (expression);
+
+        pnt->setOperandsMatrix (operandsMatrix);
+
+        pnt->SetOperatorMatrix (operatorMatrix);
     }
 
     return populationList;
 }
 
 
-PopulationList* createInitializedPopulationList (unsigned int population)
+PopulationList* createInitializedPopulationList (unsigned int population, CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix)
 {
-    PopulationList *sourcePopulation = createPoulationList (population);
+    PopulationList *sourcePopulation = createPoulationList (population, expression, operandsMatrix, operatorMatrix);
 
     sourcePopulation->initializePopulationList ();
 
@@ -31,6 +38,12 @@ PopulationList* createInitializedPopulationList (unsigned int population)
 PopulationList :: PopulationList ()
 {
     this->data = NULL;
+
+    this->expression = expression;
+
+    this->operandsMatrix = operandsMatrix;
+
+    this->operatorMatrix = operatorMatrix;
 
     this->next = NULL;
 }
@@ -54,6 +67,42 @@ PopulationList* PopulationList :: getNext ()
 void PopulationList :: setNext (PopulationList *next)
 {
     this->next = next;
+}
+
+
+CExpression *PopulationList :: getExpression ()
+{
+    return this->expression;
+}
+
+
+void PopulationList :: setExpression (CExpression *expression)
+{
+    this->expression = expression;
+}
+
+
+OperandsMatrix *PopulationList :: getOperandsMatrix ()
+{
+    return this->operandsMatrix;
+}
+
+
+void PopulationList :: setOperandsMatrix (OperandsMatrix *operandsMatrix)
+{
+    this->operandsMatrix = operandsMatrix;;
+}
+
+
+OperatorMatrix *PopulationList :: getOperatorMatrix ()
+{
+    return this->operatorMatrix;
+}
+
+
+void PopulationList :: SetOperatorMatrix (OperatorMatrix *operandsMatrix)
+{
+    this->operatorMatrix = operatorMatrix;;
 }
 
 
@@ -100,7 +149,7 @@ void PopulationList :: addIndividual (TChromosome chromosome)
 {
     PopulationList *tmp = new PopulationList ();
 
-    tmp->data = new Chromosome (chromosome);
+    tmp->data = new Chromosome (chromosome, this->expression, this->operandsMatrix, this->operatorMatrix);
 
     tmp->data->setCrossBreedingStatus (true);
 
@@ -124,7 +173,7 @@ void PopulationList :: removeIndividual ()
 
 PopulationList* PopulationList :: selectParents ()
 {
-    PopulationList* parentsList = createPoulationList (PARENTS_NUM);
+    PopulationList* parentsList = createPoulationList (PARENTS_NUM, this->next->expression, this->next->operandsMatrix, this->next->operatorMatrix);
 
     PopulationList* pnt = this;
 
@@ -333,4 +382,9 @@ PopulationList *PopulationList :: lookForResults ()
 
     return NULL;
 }
+
+
+
+
+
 

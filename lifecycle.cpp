@@ -1,39 +1,33 @@
 #include "lifecycle.h"
 
-
-LifeCycle :: LifeCycle (CExpression *expression)
+TExpression *LifeCycle (CExpression *expression)
 {
     OperandsMatrix *_operandsMatrix = new OperandsMatrix (expression);
 
     OperatorMatrix *_operatorMatrix = new OperatorMatrix ();
 
-    PopulationList *_populationList = new PopulationList ();
-}
-
-void initialization()
-{
-
-}
-
-
-void LifeCycle :: cycle ()
-{
-    PopulationList *population = createInitializedPopulationList (POPULATION);
+    PopulationList *population = createInitializedPopulationList (POPULATION, expression, _operandsMatrix, _operatorMatrix);
 
     population->initializePopulationList ();
 
-    population->reproducePopulation();
+    for (unsigned int i = 0; i < GENERATIONS_NUM; i++)
+    {
+        PopulationList *result = population->lookForResults ();
 
-    population->CrossBreedOperator();
+        if (result != NULL)
+            return result->getChromosome ()->transformChromosomeToExpression ();
 
-    population->reducePopulation();
+        population->reproducePopulation();
 
-    PopulationList *result = population->lookForResults ();
+        population->CrossBreedOperator();
 
-    if (result != NULL)
-        TExpression *expression = result->getChromosome ()->transformChromosomeToExpression ();
+        population->reducePopulation();
+    }
 
+    return expression->getExpression ();
 }
+
+
 
 
 

@@ -3,7 +3,8 @@
 
 #include "chromosome.h"
 #include "cexpression.h"
-#include "global.h"
+#include "operandsmatrix.h"
+#include "operatormatrix.h"
 #include <math.h>
 
 #define POPULATION 16
@@ -17,6 +18,12 @@ private:
     Chromosome *data;
 
     PopulationList *next;
+
+    OperandsMatrix *operandsMatrix;
+
+    OperatorMatrix *operatorMatrix;
+
+    CExpression *expression;
 
     //CExpression *sourceExpression;
 
@@ -66,12 +73,23 @@ public:
     void reducePopulation ();
 
     float getLowerSurvivalChance ();
+
+    CExpression *getExpression ();
+
+    void setExpression (CExpression *expression);
+
+    OperandsMatrix *getOperandsMatrix ();
+
+    void setOperandsMatrix (OperandsMatrix *operandsMatrix);
+
+    OperatorMatrix *getOperatorMatrix ();
+
+    void SetOperatorMatrix (OperatorMatrix *operatorMatrix);
 };
 
-PopulationList* createPoulationList (unsigned int population);
 
-PopulationList* createInitializedPopulationList (unsigned int population);
+PopulationList* createPoulationList (unsigned int population, CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix);
 
-extern PopulationList *_populationList;
+PopulationList* createInitializedPopulationList (unsigned int population, CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix);
 
 #endif // POPULATION_H

@@ -1,4 +1,5 @@
 #include "chromosome.h"
+#include "global.h"
 #include <cstdlib>
 #include <ctime>
 #include <math.h>
@@ -10,36 +11,41 @@ Chromosome :: Chromosome ()
 
     this->chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
 
-    this->geneCapacity = sizeof (TGene) * BITS_IN_BYTE;
+    initializeChromosome();
+    //Calculating memmory for fitness function.
+    this->fitnessFunction = this->calculateFitnessFunction (0, Chromosome :: sourceExpression->getFitnessFunctionLength() - 1, conjuct);
 
     this->survivalChace = this->calculateSurvivalChance ();
+}
+
+
+Chromosome :: Chromosome (CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix)
+{
+    TChromosome chromosome = (TChromosome) calloc (this->chromosomeSize, sizeof (TGene));
+
+    Chromosome (chromosome, expression, operandsMatrix, operatorMatrix);
+}
+
+
+Chromosome :: Chromosome (TChromosome chromosome, CExpression *expression, OperandsMatrix *operandsMatrix, OperatorMatrix *operatorMatrix)
+{
+    this->sourceExpression = expression;
+
+    this->chromosomeSize = expression->getExpressionLength();
+
+    this->chromosome = chromosome;
+
+    this->operandsMatrix = operandsMatrix;
+
+    this->operatorMatrix = operatorMatrix;
+
+    this->crossBreeded = false;
 
     initializeChromosome();
     //Calculating memmory for fitness function.
     this->fitnessFunction = this->calculateFitnessFunction (0, Chromosome :: sourceExpression->getFitnessFunctionLength() - 1, conjuct);
-}
-
-
-Chromosome :: Chromosome (CExpression *expression)
-{
-    this->sourceExpression = expression;
-
-    Chromosome ();
-}
-
-
-Chromosome :: Chromosome (TChromosome chromosome)
-{
-    this->chromosomeSize = 2 * Chromosome :: sourceExpression->getExpressionLength();
-
-    this->chromosome = chromosome;
-
-    this->geneCapacity = sizeof (TGene) * BITS_IN_BYTE;
 
     this->survivalChace = this->calculateSurvivalChance ();
-
-    //Calculating memmory for fitness function.
-    this->fitnessFunction = this->calculateFitnessFunction (0, Chromosome :: sourceExpression->getFitnessFunctionLength() - 1, conjuct);
 }
 
 
@@ -63,7 +69,7 @@ void Chromosome :: initializeChromosome()
 
     for (unsigned int i = 0; i < this->chromosomeSize; i++)
         if (0 == rand() % CHANCE)
-            this->chromosome[i] = rand() % this->geneCapacity;
+            this->chromosome[i] = rand() % OPERAND_FIELD_CAPACITY;
 }
 
 
@@ -112,7 +118,7 @@ float Chromosome :: calculateSurvivalChance ()
 
 unsigned int Chromosome :: getLowPriorityPosition (unsigned int leftIndex, unsigned int rightIndex)
 {
-    TCell lowPriority = (unsigned int) round (exp(this->geneCapacity * log (2))) - 1;
+    TCell lowPriority = (unsigned int) round (exp(OPERAND_FIELD_CAPACITY * log (2))) - 1;
     unsigned int lowPriorityPostion = leftIndex + OPERATION_PRIORITY;
 
     for (unsigned int i = lowPriorityPostion; i < rightIndex; i += BLOCK_SHIFT)
@@ -174,7 +180,7 @@ TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOp
     TFitnessFunction fitnessFunction = createFitnessFunction();
 
     //Getting operand value throw it's coordinates.
-    TOperand operand = _operandsMatrix->getOperandThrowPosition (xCoord, yCoord);
+    TOperand operand = this->operandsMatrix->getOperandThrowPosition (xCoord, yCoord);
 
     //Check if operand is not empty
     if (0 != operand)
@@ -189,7 +195,7 @@ TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOp
 void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, TOperand operand)
 {
     //Getting operand index among other ones in source expression.
-    unsigned int operandNumber = _operandsMatrix->getOperandNumber(operand);
+    unsigned int operandNumber = operandsMatrix->getOperandNumber(operand);
 
     //Calculating number of same values repeats in result array.
     unsigned int repeatsCount = (unsigned int)round (exp (operandNumber * log (2)));

@@ -2,8 +2,7 @@
 #define ADJACENCYMATRIX_H
 
 #include "cexpression.h"
-
-#define OPERAND_FIELD_CAPACITY 256
+#include "global.h"
 
 typedef unsigned char TCell;
 
