@@ -122,6 +122,130 @@ TFitnessFunction CExpression :: getSourceExpressionResult ()
     return this->expressionResult;
 }
 
+
+
+TFitnessFunction CExpression :: calculateFunctionResult (unsigned int left, unsigned int right)
+{
+    //Fitness function creating throw allocating space for it. Returns pointer to this space.
+    TFitnessFunction fitnessFunction = (TFitnessFunction) calloc (this->getFitnessFunctionLength (), sizeof(bool));
+
+    unsigned int lowerPriorityPosition = getLowerPriorityPosition (left, right);
+
+    if (this->expression [lowerPriorityPosition] == '*')
+        fitnessFunction = conjuction (calculateFunctionResult (left, lowerPriorityPosition - 1),
+                                      calculateFunctionResult (lowerPriorityPosition + 2, right), this->functionResultSize);
+    else if (this->expression [lowerPriorityPosition] == '+')
+        fitnessFunction = disjunctive (calculateFunctionResult (left, lowerPriorityPosition - 1),
+                                      calculateFunctionResult (lowerPriorityPosition + 2, right), this->functionResultSize);
+    else if (this->expression [lowerPriorityPosition] == '!')
+        invertFitnessFuntion (calculateFunctionResult (lowerPriorityPosition + 1, right), fitnessFunction);
+
+
+}
+
+
+unsigned int CExpression :: getOperandNumber (TOperand operand)
+{
+    unsigned int position = 0;
+    unsigned int expressionArity = this->expressionArity;
+
+    while ((position < expressionArity) & (operand != this->operandsArray [position]))
+        position++;
+
+    return position;
+}
+
+
+void CExpression :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, unsigned int operandNumber, unsigned int fitnessFunctionLength)
+{
+    //Calculating position for fitness function initialize starting.
+    unsigned int startPosition = (unsigned int) round (exp (operandNumber * log (2)));
+
+    unsigned int repeatsCount = startPosition;
+
+    //Inialization cycle.
+    for (unsigned int i = startPosition; i < fitnessFunctionLength; )
+    {
+        for (unsigned int j = i; j < repeatsCount; j++)
+            (*fitnessFunction)[j] = true;
+        i += repeatsCount * 2;
+    }
+}
+
+
+TFitnessFunction CExpression :: conjuction (TFitnessFunction fun1, TFitnessFunction fun2, unsigned int fitnessFunctionLength)
+{
+    //Two strings conjuction.
+    for (unsigned int i = 0; i < fitnessFunctionLength; i++)
+        fun1[i] &= fun2[i];
+    //Freeing memmory.
+    free(fun2);
+
+    return fun1;
+}
+
+
+TFitnessFunction CExpression :: disjunctive (TFitnessFunction fun1, TFitnessFunction fun2, unsigned int fitnessFunctionLength)
+{
+    //Two strings disjunctive.
+    for (unsigned int i = 0; i < fitnessFunctionLength; i++)
+        fun1[i] |= fun2[i];
+    //Freeing memmory.
+    free(fun2);
+
+    return fun1;
+}
+
+
+void CExpression :: invertFitnessFuntion (TFitnessFunction sourceFitnessFunction, TFitnessFunction resultFitnessFunction)
+{
+    for (unsigned int i = 0; i < this->functionResultSize; i++)
+        resultFitnessFunction [i] = ! sourceFitnessFunction [i];
+}
+
+
+unsigned int CExpression :: getLowerPriorityPosition (unsigned int leftIndex, unsigned int righntIndex)
+{
+    unsigned int position = leftIndex;
+    unsigned int lowPriority = INT_MAX;
+    unsigned int breackPriority = 0;
+    unsigned int operationPriority;
+
+    bool backwardExists = false;
+
+    for (unsigned int i = leftIndex; i <= righntIndex; i++)
+    {
+        if ('(' == this->expression [i])
+        {
+            breackPriority += 5;
+            backwardExists = true;
+        }
+        else if ((')' == this->expression[i]) & (backwardExists))
+        {
+            breackPriority -= 5;
+            if (0 == breackPriority)
+                backwardExists = false;
+        }
+        else if ('+' == this->expression[i])
+            operationPriority = 0;
+        else if ('*' == this->expression[i])
+            operationPriority = 1;
+        else if (('(' == this->expression[i]) || (')' == this->expression[i]))
+            operationPriority = 2;
+        else if ('!' == this->expression[i])
+            operationPriority = 3;
+        else
+            operationPriority = 4;
+
+        if (lowPriority >= breackPriority + operationPriority)
+        {
+            position = i;
+            lowPriority = breackPriority + operationPriority;
+        }
+    }
+    return position;
+}
+
 int main()
 {
 }

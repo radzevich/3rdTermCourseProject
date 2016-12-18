@@ -26,8 +26,6 @@ public:
 
     TOperand getOperandThrowPosition (TCell xCoord, TCell yCoord);
 
-    unsigned int getOperandNumber (TOperand operand);
-
     TCell getXCoordThrowValue (TCell value);
 
     TCell getYCoordThrowValue (TCell value);

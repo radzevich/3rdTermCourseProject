@@ -55,18 +55,6 @@ TOperand OperandsMatrix :: getOperandThrowPosition (TCell xCoord, TCell yCoord)
 }
 
 
-unsigned int OperandsMatrix :: getOperandNumber (TOperand operand)
-{
-    unsigned int position = 0;
-    unsigned int expressionArity = OperandsMatrix :: sourceExpression->getExpressionArity ();
-
-    while ((position < expressionArity) & (operand != this->operands[position]))
-        position++;
-
-    return position;
-}
-
-
 TCell OperandsMatrix :: getXCoordThrowValue (TCell value)
 {
     for (unsigned int i = 0; i < OPERAND_FIELD_CAPACITY; i ++)

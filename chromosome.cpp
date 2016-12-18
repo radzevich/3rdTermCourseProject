@@ -103,11 +103,11 @@ TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex,
         unsigned int lowPriorityPosition = getLowPriorityPosition (leftIndex, rightIndex);
 
         if ((TGene) CONJ == chromosome[lowPriorityPosition])
-            fitnessFunction = conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1, conjuct),
-                                          calculateFitnessFunction (lowPriorityPosition + 2, rightIndex, conjuct));
+            fitnessFunction = CExpression :: conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1, conjuct),
+                                          calculateFitnessFunction (lowPriorityPosition + 2, rightIndex, conjuct), this->sourceExpression->getFitnessFunctionLength ());
         else
-            fitnessFunction = disjunctive (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1, disjunct),
-                                           calculateFitnessFunction (lowPriorityPosition + 2, rightIndex, disjunct));
+            fitnessFunction = CExpression :: disjunctive (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1, disjunct),
+                                           calculateFitnessFunction (lowPriorityPosition + 2, rightIndex, disjunct), this->sourceExpression->getFitnessFunctionLength ());
     }
     else
         fitnessFunction = getElementaryFitnessFunction (leftIndex, rightIndex, operation);
@@ -156,31 +156,6 @@ TFitnessFunction Chromosome :: createFitnessFunction()
 }
 
 
-TFitnessFunction Chromosome :: conjuction (TFitnessFunction fun1, TFitnessFunction fun2)
-{
-    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength ();
-    //Two strings conjuction.
-    for (unsigned int i = 0; i < fitnessFunctionLength; i++)
-        fun1[i] &= fun2[i];
-    //Freeing memmory.
-    free(fun2);
-
-    return fun1;
-}
-
-
-TFitnessFunction Chromosome :: disjunctive (TFitnessFunction fun1, TFitnessFunction fun2)
-{
-    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength();
-    //Two strings disjunctive.
-    for (unsigned int i = 0; i < fitnessFunctionLength; i++)
-        fun1[i] |= fun2[i];
-    //Freeing memmory.
-    free(fun2);
-
-    return fun1;
-}
-
 //Check if operand inversed. Returns true if it is.
 bool operanedInverted (TOperand operand)
 {
@@ -199,41 +174,11 @@ TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOp
 
     //Check if operand is not empty
     if (0 != operand)
-        initializeSimpleFunction (&fitnessFunction, operand);
+        CExpression :: initializeSimpleFunction (&fitnessFunction, this->sourceExpression->getOperandNumber (operand), this->sourceExpression->getFitnessFunctionLength ());
     else
         initializeEmptyFunction (&fitnessFunction, operation);
 
     return fitnessFunction;
-}
-
-
-void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, TOperand operand)
-{
-    //Getting operand index among other ones in source expression.
-    unsigned int operandNumber = operandsMatrix->getOperandNumber(operand);
-
-    //Calculating number of same values repeats in result array.
-    unsigned int repeatsCount = (unsigned int)round (exp (operandNumber * log (2)));
-
-    //Calculating position for fitness function initialize starting.
-    unsigned int startPosition;
-
-    unsigned int fitnessFunctionLength = Chromosome :: sourceExpression->getFitnessFunctionLength ();
-
-    //If operand haven't been inverted, it will be initialized from the (2 ^ operandNumber) position with "true" value.
-    //In other way array will be inverted by initializing with "false" value instead of "true".
-    if (operanedInverted (operand))
-        startPosition = 0;
-    else
-        startPosition = repeatsCount;
-
-    //Inialization cycle.
-    for (unsigned int i = startPosition; i < fitnessFunctionLength; )
-    {
-        for (unsigned int j = i; j < repeatsCount; j++)
-            (*fitnessFunction)[j] = true;
-        i += repeatsCount * 2;
-    }
 }
 
 
@@ -357,7 +302,7 @@ TExpression *Chromosome :: transformChromosomeToExpression()
 {
     TExpression expression;
 
-    //There will be transformation code.
+
 
     return &expression;
 }

@@ -6,6 +6,7 @@
 //#include "operatormatrix.h"
 
 #include "global.h"
+#include <climits>
 
 #define BLOCK_SIZE 1
 
@@ -55,6 +56,12 @@ private:
     //Calculate function result length (2 ^ (number of uniq operands)).
     void calculateFunctionResultStringLength();
 
+    void invertFitnessFuntion (TFitnessFunction sourcefitnessFunction, TFitnessFunction resultFitnessFunction);
+
+    TFitnessFunction calculateFunctionResult (unsigned int left, unsigned int right);
+
+    unsigned int getLowerPriorityPosition (unsigned int leftIndex, unsigned int righntIndex);
+
 public:
     CExpression(TExpression& expression);
 
@@ -67,7 +74,17 @@ public:
     //Returns the functionResultSize value.
     unsigned int getFitnessFunctionLength();
 
+    unsigned int getOperandNumber (TOperand operand);
+
     TFitnessFunction getSourceExpressionResult ();
+
+    //Conjuct two fitness functions.
+    static TFitnessFunction conjuction (TFitnessFunction fun1, TFitnessFunction fun2, unsigned int fitnessFunctionLength);
+
+    //Disjunct two fitness functions.
+    static TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2, unsigned int fitnessFunctionLength);
+
+    static void initializeSimpleFunction (TFitnessFunction *fitnessFunction, unsigned int operandNumber, unsigned int fitnessFunctionLength);
 
     TExpression *getExpression ();
 

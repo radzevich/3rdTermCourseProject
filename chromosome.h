@@ -59,8 +59,6 @@ private:
 
     unsigned int getLowPriorityPosition (unsigned int leftIndex, unsigned int rightIndex);
 
-    void initializeSimpleFunction (TFitnessFunction *fitnessFunction, TOperand operand);
-
     void initializeEmptyFunction (TFitnessFunction *fitnessFunction, TOperation operation);
 
     float calculateSurvivalChance ();
@@ -80,12 +78,6 @@ public:
 
     //Calculate expression result.
     TFitnessFunction calculateFitnessFunction ();
-    
-    //Conjuct two fitness functions.
-    TFitnessFunction conjuction (TFitnessFunction fun1, TFitnessFunction fun2);
-    
-    //Disjunct two fitness functions.
-    TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2);
 
     TExpression *transformChromosomeToExpression();
 
