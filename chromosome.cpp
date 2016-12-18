@@ -45,11 +45,11 @@ Chromosome :: Chromosome (TChromosome chromosome)
 
 Chromosome :: ~Chromosome ()
 {
-    this->operandsMatrix = NULL;
+    //this->operandsMatrix = NULL;
 
     this->sourceExpression = NULL;
 
-    this->operatorMatrix = NULL;
+    //this->operatorMatrix = NULL;
 
     free (this->chromosome);
 
@@ -174,7 +174,7 @@ TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOp
     TFitnessFunction fitnessFunction = createFitnessFunction();
 
     //Getting operand value throw it's coordinates.
-    TOperand operand = this->operandsMatrix->getOperandThrowPosition(xCoord, yCoord);
+    TOperand operand = _operandsMatrix->getOperandThrowPosition (xCoord, yCoord);
 
     //Check if operand is not empty
     if (0 != operand)
@@ -189,7 +189,7 @@ TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOp
 void Chromosome :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, TOperand operand)
 {
     //Getting operand index among other ones in source expression.
-    unsigned int operandNumber = this->operandsMatrix->getOperandNumber(operand);
+    unsigned int operandNumber = _operandsMatrix->getOperandNumber(operand);
 
     //Calculating number of same values repeats in result array.
     unsigned int repeatsCount = (unsigned int)round (exp (operandNumber * log (2)));

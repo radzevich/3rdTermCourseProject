@@ -3,11 +3,11 @@
 
 LifeCycle :: LifeCycle (CExpression *expression)
 {
-    this->_operandsMatrix = new OperandsMatrix (expression);
+    OperandsMatrix *_operandsMatrix = new OperandsMatrix (expression);
 
-    this->_operatorMatrix = new OperatorMatrix ();
+    OperatorMatrix *_operatorMatrix = new OperatorMatrix ();
 
-    this->_populationList = new PopulationList ();
+    PopulationList *_populationList = new PopulationList ();
 }
 
 void initialization()

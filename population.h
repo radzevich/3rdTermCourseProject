@@ -3,6 +3,7 @@
 
 #include "chromosome.h"
 #include "cexpression.h"
+#include "global.h"
 #include <math.h>
 
 #define POPULATION 16
@@ -17,7 +18,7 @@ private:
 
     PopulationList *next;
 
-    static CExpression *sourceExpression;
+    //CExpression *sourceExpression;
 
     unsigned int getPopulationListLength ();
 
@@ -50,7 +51,7 @@ public:
 
     void setNext (PopulationList* next);
 
-    static CExpression *getSourceExpression ();
+    //CExpression *getSourceExpression ();
 
     void addIndividual (PopulationList *individual);
 
@@ -71,6 +72,6 @@ PopulationList* createPoulationList (unsigned int population);
 
 PopulationList* createInitializedPopulationList (unsigned int population);
 
-
+extern PopulationList *_populationList;
 
 #endif // POPULATION_H

@@ -19,5 +19,6 @@ HEADERS += \
     operandsmatrix.h \
     operatormatrix.h \
     population.h \
-    lifecycle.h
+    lifecycle.h \
+    global.h
 

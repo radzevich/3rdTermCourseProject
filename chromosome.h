@@ -4,6 +4,8 @@
 #include "cexpression.h"
 #include "operandsmatrix.h"
 #include "operatormatrix.h"
+#include "chromosome.h"
+#include "global.h"
 #include <ctime>
 
 
@@ -35,11 +37,11 @@ private:
     TFitnessFunction fitnessFunction;
 
     //Two-dimensional matrix, consisting of randomly spreaded operands of source expression.
-    OperandsMatrix *operandsMatrix;
+    //OperandsMatrix *operandsMatrix;
 
     //Two-dimensional matrix of randomly spreaded conjunctions and disjunctives.
     //The first value is operation priority, the second - operation type.
-    OperatorMatrix *operatorMatrix;
+    //OperatorMatrix *operatorMatrix;
 
     float survivalChace;
 

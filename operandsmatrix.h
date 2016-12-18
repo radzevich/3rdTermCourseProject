@@ -29,4 +29,6 @@ public:
     unsigned int getOperandNumber (TOperand operand);
 };
 
+//extern OperandsMatrix *_operandsMatrix;
+
 #endif // OPERANDSMATRIX_H

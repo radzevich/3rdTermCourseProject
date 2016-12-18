@@ -18,4 +18,6 @@ public:
     OperatorMatrix();
 };
 
+extern OperatorMatrix *_operatorMatrix;
+
 #endif // OPERATORMATRIX_H

@@ -8,6 +8,7 @@
 #include "operandsmatrix.h"
 #include "operatormatrix.h"
 #include "population.h"
+#include "global.h"
 
 TExpression *getInputExpression();
 
@@ -16,11 +17,11 @@ class LifeCycle
 private:
     CExpression *_expression;
 
-    OperandsMatrix *_operandsMatrix;
+    //OperandsMatrix *_operandsMatrix;
 
-    OperatorMatrix *_operatorMatrix;
+    //OperatorMatrix *_operatorMatrix;
 
-    PopulationList *_populationList;
+    //PopulationList *_populationList;
 
 public:
     LifeCycle (CExpression *expression);
