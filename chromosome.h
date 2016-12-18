@@ -27,6 +27,7 @@ private:
     //Maximum length of chromosome (equal with source expression length).
     unsigned int chromosomeSize = 0;
 
+    //PopulationList *result;
     //The amount of values chromosome can consist.
     //unsigned int geneCapacity;
 

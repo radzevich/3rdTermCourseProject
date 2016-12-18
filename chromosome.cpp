@@ -67,9 +67,24 @@ void Chromosome :: initializeChromosome()
 {
     srand (time (NULL));
 
-    for (unsigned int i = 0; i < this->chromosomeSize; i++)
-        if (0 == rand() % CHANCE)
-            this->chromosome[i] = rand() % OPERAND_FIELD_CAPACITY;
+    TOperand *operands = this->sourceExpression->getOperandsArray ();
+
+    unsigned int expressionArity = this->sourceExpression->getExpressionArity ();
+
+    unsigned int initialisationPoition;
+
+    for (unsigned int i = 0; i < expressionArity; i++)
+    {
+        initialisationPoition = rand ();
+
+        this->chromosome [initialisationPoition] = this->operandsMatrix->getXCoordThrowValue(operands [i]);
+
+        this->chromosome [(initialisationPoition + 1) % this->chromosomeSize] = this->operandsMatrix->getXCoordThrowValue(operands [i]);
+
+        this->chromosome [(initialisationPoition + 2) % this->chromosomeSize] = (TGene) rand () % OPERAND_FIELD_CAPACITY;
+
+        this->chromosome [(initialisationPoition + 3) % this->chromosomeSize] = (TGene) rand () % OPERAND_FIELD_CAPACITY;
+    }
 }
 
 

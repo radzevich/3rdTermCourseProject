@@ -52,7 +52,7 @@ void CExpression :: removeSpaces()
 //Gives out memmory for operandsArray according to the number of uniq operands used in source expression.
 void CExpression :: createOperandsArray()
 {
-    this->operandsArray = (TOperand*) calloc (CExpression :: expressionArity * sizeof (TOperand), sizeof (TOperand));
+    this->operandsArray = (TOperand*) calloc ((this->expressionArity << 1) * sizeof (TOperand), sizeof (TOperand));
 }
 
 //Initializes operansArray with all uniq operands used in native expression.
@@ -60,24 +60,19 @@ void CExpression :: initializeOperandsArray()
 {
     unsigned int expressionLenght = this->expression.length();
     unsigned int position = 0;
-    bool operandRepeats;
 
     //Adding of uniq operands to operandsArray.
     for (unsigned int i = 0; i < expressionLenght; i++)
     {
-        operandRepeats = false;
-
         //Checking for existence of current operand in operandsArray.
-        for (unsigned int j = 0; j < CExpression :: expressionArity; j++)
-            if (this->operandsArray[i] == this->expression[j])
-                operandRepeats = true;
+        for (unsigned int j = 0; j < this->expressionArity * 2; j++)
+            if ((this->operandsArray[i] == this->expression[j]) | (this->operandsArray[i] == (this->expression[j] ^ 128)))
+                continue;
 
-        //If operand haven't been added in operandsArray before, it will be added
-        if (!operandRepeats)
-        {
-            this->operandsArray[position] = this->expression[i];
-            position++;
-        }
+        //If operand haven't been added in operandsArray before, it will be added.
+        this->operandsArray[position] = this->expression[i];
+        this->operandsArray[position + 1] = this->expression[i] | 128;
+        position += 2;
     }
 }
 

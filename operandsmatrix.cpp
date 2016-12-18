@@ -65,3 +65,25 @@ unsigned int OperandsMatrix :: getOperandNumber (TOperand operand)
 
     return position;
 }
+
+
+TCell OperandsMatrix :: getXCoordThrowValue (TCell value)
+{
+    for (unsigned int i = 0; i < OPERAND_FIELD_CAPACITY; i ++)
+        for (unsigned int j = 0; j < OPERAND_FIELD_CAPACITY; j++)
+            if (value == this->field [i][j])
+                return (TCell) i;
+
+    return 0;
+}
+
+
+TCell OperandsMatrix :: getYCoordThrowValue (TCell value)
+{
+    for (unsigned int i = 0; i < OPERAND_FIELD_CAPACITY; i ++)
+        for (unsigned int j = 0; j < OPERAND_FIELD_CAPACITY; j++)
+            if (value == this->field [i][j])
+                return (TCell) j;
+
+    return 0;
+}
