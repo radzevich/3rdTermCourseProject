@@ -2,10 +2,19 @@
 #include <cstdlib>
 #include <math.h>
 
-CExpression :: CExpression (TExpression &expression)
+CExpression :: CExpression (TExpression expression)
 {
     this->expression = expression;
-    calculateExpressionArity (expression);
+
+    this->removeSpaces ();
+
+    this->expressionLength = this->expression.length ();
+
+    this->calculateExpressionArity ();
+
+    this->calculateFunctionResultStringLength();
+
+    this->calculateFunctionResult (0, this->expressionLength - 1);
 }
 
 //Check expression validation. Return "false" if invalid symbol have been founded. If expression valid, "true" result will be returned.
@@ -56,38 +65,36 @@ void CExpression :: createOperandsArray()
 }
 
 //Initializes operansArray with all uniq operands used in native expression.
-void CExpression :: initializeOperandsArray()
+void CExpression :: initializeOperandsArray (bool *checkArray)
 {
-    unsigned int expressionLenght = this->expression.length();
+    createOperandsArray ();
+
     unsigned int position = 0;
 
-    //Adding of uniq operands to operandsArray.
-    for (unsigned int i = 0; i < expressionLenght; i++)
-    {
-        //Checking for existence of current operand in operandsArray.
-        for (unsigned int j = 0; j < this->expressionArity * 2; j++)
-            if ((this->operandsArray[i] == this->expression[j]) | (this->operandsArray[i] == (this->expression[j] ^ 128)))
-                continue;
-
-        //If operand haven't been added in operandsArray before, it will be added.
-        this->operandsArray[position] = this->expression[i];
-        this->operandsArray[position + 1] = this->expression[i] | 128;
-        position += 2;
-    }
+    for (unsigned int i = 0; i < ALPHABET_SIZE; i++)
+        if (checkArray [i])
+        {
+            this->operandsArray [position] = i + 97;
+            this->operandsArray [position + 1] = i + 97 + 128;
+            position += 2;
+        }
 }
 
 //Returns number of uniq operands in expression
-void CExpression :: calculateExpressionArity (TExpression& expression)
+void CExpression :: calculateExpressionArity ()
 {
-    unsigned int expressionLength = expression.length();
-    unsigned short int checkarraySize = sizeof(char);
-    bool *checkArray = (bool*) calloc (checkarraySize, BLOCK_SIZE);
+    unsigned int expressionLength = this->expression.length();
+
+    bool *checkArray = (bool*) calloc (ALPHABET_SIZE, BLOCK_SIZE);
 
     for (unsigned int i = 0; i < expressionLength; i++)
-        checkArray[(unsigned int)expression[i]] = true;
+        checkArray [(TOperand) this->expression [i] - 97] = true;
 
-    for (int i = 97; i < 122; i++)
-        this->expressionArity++;
+    for (int i = 0; i < 122 - 97; i++)
+        if (checkArray [i])
+            this->expressionArity++;
+
+    initializeOperandsArray (checkArray);
 }
 
 
@@ -249,6 +256,3 @@ unsigned int CExpression :: getLowerPriorityPosition (unsigned int leftIndex, un
 }
 
 
-int main()
-{
-}

@@ -33,3 +33,8 @@ void OperatorMatrix::initializeField()
     }
 }
 
+TCell OperatorMatrix :: getOperation (TCell operationIndex, TCell priorityLevel)
+{
+    return this->field [operationIndex][priorityLevel];
+}
+

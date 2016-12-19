@@ -102,7 +102,10 @@ TFitnessFunction Chromosome :: calculateFitnessFunction (unsigned int leftIndex,
     {
         unsigned int lowPriorityPosition = getLowPriorityPosition (leftIndex, rightIndex);
 
-        if ((TGene) CONJ == chromosome[lowPriorityPosition])
+        TCell operation = this->operatorMatrix->getOperation (this->chromosome [lowPriorityPosition + OPERATION],
+                                                              this->chromosome [lowPriorityPosition + OPERATION_PRIORITY]);
+
+        if ((TGene) CONJ == operation)
             fitnessFunction = CExpression :: conjuction (calculateFitnessFunction (leftIndex, lowPriorityPosition - 1, conjuct),
                                           calculateFitnessFunction (lowPriorityPosition + 2, rightIndex, conjuct), this->sourceExpression->getFitnessFunctionLength ());
         else

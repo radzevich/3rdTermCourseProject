@@ -9,6 +9,8 @@ private:
     void initializeField();
 public:
     OperatorMatrix();
+
+    TCell getOperation (TCell operationIndex, TCell priorityLevel);
 };
 
 extern OperatorMatrix *_operatorMatrix;

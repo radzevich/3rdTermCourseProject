@@ -48,10 +48,10 @@ private:
     void createOperandsArray();
 
     //Initializes operandsArray with all uniq values.
-    void initializeOperandsArray();
+    void initializeOperandsArray (bool *checkArray);
 
     //Calculates the number of uniq operands in expression
-    void calculateExpressionArity (TExpression& expression);
+    void calculateExpressionArity ();
 
     //Calculate function result length (2 ^ (number of uniq operands)).
     void calculateFunctionResultStringLength();
@@ -63,7 +63,7 @@ private:
     unsigned int getLowerPriorityPosition (unsigned int leftIndex, unsigned int righntIndex);
 
 public:
-    CExpression(TExpression& expression);
+    CExpression(TExpression expression);
 
     //Returns expressionArity.
     unsigned int getExpressionArity();

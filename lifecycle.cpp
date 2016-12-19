@@ -1,6 +1,10 @@
 #include "lifecycle.h"
 
-TExpression LifeCycle (CExpression *expression)
+#include <iostream>
+
+using namespace std;
+
+TExpression lifeCycle (CExpression *expression)
 {
     OperandsMatrix *_operandsMatrix = new OperandsMatrix (expression);
 
@@ -27,6 +31,16 @@ TExpression LifeCycle (CExpression *expression)
     return *(expression->getExpression ());
 }
 
+int main ()
+{
+    TExpression expression = "a*b*c+b*c+c*a*a";
+
+    CExpression *cexpression = new CExpression (expression);
+
+    cout << lifeCycle (cexpression) << endl;
+
+    return 0;
+}
 
 
 

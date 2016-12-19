@@ -6,6 +6,7 @@
 #define BOOL_CONJ true
 #define BOOL_DISJ false
 #define OPERAND_FIELD_CAPACITY 256
+#define ALPHABET_SIZE 26
 
 typedef unsigned char TOperand;
 typedef enum {conjuct = BOOL_CONJ, disjunct = BOOL_DISJ} TOperation;
