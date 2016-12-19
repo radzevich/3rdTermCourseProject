@@ -79,7 +79,7 @@ public:
     //Calculate expression result.
     TFitnessFunction calculateFitnessFunction ();
 
-    TExpression *transformChromosomeToExpression();
+    TExpression translateChromosomeIntoExpression (unsigned int left, unsigned int right);
 
     static TChromosome crossBreede (Chromosome *father, Chromosome *mather);
 
@@ -108,7 +108,7 @@ public:
 };
 
 
-
+bool operanedInverted (TOperand operand);
 
 
 

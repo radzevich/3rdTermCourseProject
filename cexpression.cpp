@@ -104,12 +104,12 @@ unsigned int CExpression :: getExpressionLength()
 void CExpression :: calculateFunctionResultStringLength()
 {
     //The length of function result equal to 2 ^ (number of uniq operands).
-    functionResultSize = (unsigned int) round (exp (this->getExpressionArity() * log (2)));
+    fitnessFunctionLength = (unsigned int) round (exp (this->getExpressionArity() * log (2)));
 }
 
 unsigned int CExpression :: getFitnessFunctionLength()
 {
-    return CExpression :: functionResultSize;
+    return CExpression :: fitnessFunctionLength;
 }
 
 TOperand *CExpression::getOperandsArray()
@@ -133,14 +133,16 @@ TFitnessFunction CExpression :: calculateFunctionResult (unsigned int left, unsi
 
     if (this->expression [lowerPriorityPosition] == '*')
         fitnessFunction = conjuction (calculateFunctionResult (left, lowerPriorityPosition - 1),
-                                      calculateFunctionResult (lowerPriorityPosition + 2, right), this->functionResultSize);
+                                      calculateFunctionResult (lowerPriorityPosition + 2, right), this->fitnessFunctionLength);
     else if (this->expression [lowerPriorityPosition] == '+')
         fitnessFunction = disjunctive (calculateFunctionResult (left, lowerPriorityPosition - 1),
-                                      calculateFunctionResult (lowerPriorityPosition + 2, right), this->functionResultSize);
+                                      calculateFunctionResult (lowerPriorityPosition + 2, right), this->fitnessFunctionLength);
     else if (this->expression [lowerPriorityPosition] == '!')
         invertFitnessFuntion (calculateFunctionResult (lowerPriorityPosition + 1, right), fitnessFunction);
+    else
+        initializeSimpleFunction (fitnessFunction, getOperandNumber (this->expression [lowerPriorityPosition]), this->fitnessFunctionLength);
 
-
+    return fitnessFunction;
 }
 
 
@@ -156,7 +158,7 @@ unsigned int CExpression :: getOperandNumber (TOperand operand)
 }
 
 
-void CExpression :: initializeSimpleFunction (TFitnessFunction *fitnessFunction, unsigned int operandNumber, unsigned int fitnessFunctionLength)
+void CExpression :: initializeSimpleFunction (TFitnessFunction fitnessFunction, unsigned int operandNumber, unsigned int fitnessFunctionLength)
 {
     //Calculating position for fitness function initialize starting.
     unsigned int startPosition = (unsigned int) round (exp (operandNumber * log (2)));
@@ -167,7 +169,7 @@ void CExpression :: initializeSimpleFunction (TFitnessFunction *fitnessFunction,
     for (unsigned int i = startPosition; i < fitnessFunctionLength; )
     {
         for (unsigned int j = i; j < repeatsCount; j++)
-            (*fitnessFunction)[j] = true;
+            fitnessFunction[j] = true;
         i += repeatsCount * 2;
     }
 }
@@ -199,7 +201,7 @@ TFitnessFunction CExpression :: disjunctive (TFitnessFunction fun1, TFitnessFunc
 
 void CExpression :: invertFitnessFuntion (TFitnessFunction sourceFitnessFunction, TFitnessFunction resultFitnessFunction)
 {
-    for (unsigned int i = 0; i < this->functionResultSize; i++)
+    for (unsigned int i = 0; i < this->fitnessFunctionLength; i++)
         resultFitnessFunction [i] = ! sourceFitnessFunction [i];
 }
 
@@ -245,6 +247,7 @@ unsigned int CExpression :: getLowerPriorityPosition (unsigned int leftIndex, un
     }
     return position;
 }
+
 
 int main()
 {

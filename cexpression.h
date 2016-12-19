@@ -30,7 +30,7 @@ private:
     unsigned int expressionArity;
 
     //Length of function result equal to 2 ^ (number of uniq operands) ~ legnth of fitness function.
-    unsigned int functionResultSize;
+    unsigned int fitnessFunctionLength;
 
     //The result of source expression calculation.
     TFitnessFunction expressionResult;
@@ -84,7 +84,7 @@ public:
     //Disjunct two fitness functions.
     static TFitnessFunction disjunctive (TFitnessFunction fun1, TFitnessFunction fun2, unsigned int fitnessFunctionLength);
 
-    static void initializeSimpleFunction (TFitnessFunction *fitnessFunction, unsigned int operandNumber, unsigned int fitnessFunctionLength);
+    static void initializeSimpleFunction (TFitnessFunction fitnessFunction, unsigned int operandNumber, unsigned int fitnessFunctionLength);
 
     TExpression *getExpression ();
 

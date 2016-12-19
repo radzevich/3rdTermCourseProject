@@ -1,6 +1,6 @@
 #include "lifecycle.h"
 
-TExpression *LifeCycle (CExpression *expression)
+TExpression LifeCycle (CExpression *expression)
 {
     OperandsMatrix *_operandsMatrix = new OperandsMatrix (expression);
 
@@ -15,7 +15,7 @@ TExpression *LifeCycle (CExpression *expression)
         PopulationList *result = population->lookForResults ();
 
         if (result != NULL)
-            return result->getChromosome ()->transformChromosomeToExpression ();
+            return result->getChromosome ()->translateChromosomeIntoExpression (0, result->getChromosome ()->getChromosomeLength ());
 
         population->reproducePopulation();
 
@@ -24,7 +24,7 @@ TExpression *LifeCycle (CExpression *expression)
         population->reducePopulation();
     }
 
-    return expression->getExpression ();
+    return *(expression->getExpression ());
 }
 
 

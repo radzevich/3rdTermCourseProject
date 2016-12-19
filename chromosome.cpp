@@ -159,7 +159,7 @@ TFitnessFunction Chromosome :: createFitnessFunction()
 //Check if operand inversed. Returns true if it is.
 bool operanedInverted (TOperand operand)
 {
-    return (operand && 127 != 0);
+    return (operand && 128 != 0);
 }
 
 
@@ -174,7 +174,7 @@ TFitnessFunction Chromosome :: getElementaryFitnessFunction(TOperand xCoord, TOp
 
     //Check if operand is not empty
     if (0 != operand)
-        CExpression :: initializeSimpleFunction (&fitnessFunction, this->sourceExpression->getOperandNumber (operand), this->sourceExpression->getFitnessFunctionLength ());
+        CExpression :: initializeSimpleFunction (fitnessFunction, this->sourceExpression->getOperandNumber (operand), this->sourceExpression->getFitnessFunctionLength ());
     else
         initializeEmptyFunction (&fitnessFunction, operation);
 
@@ -298,16 +298,39 @@ void Chromosome :: mutationOperator()
     }
 }
 
-TExpression *Chromosome :: transformChromosomeToExpression()
+
+
+TExpression Chromosome :: translateChromosomeIntoExpression (unsigned int left, unsigned int right)
 {
     TExpression expression;
 
+    unsigned int lowerPriorityPosition = INT_MAX;
 
+    for (unsigned int curPosition = left + OPERATION; curPosition < right; curPosition += BLOCK_SHIFT)
+        if (this->chromosome [curPosition + OPERATION] < lowerPriorityPosition)
+            lowerPriorityPosition = curPosition;
 
-    return &expression;
+    if (right - left > BLOCK_SHIFT)
+    {
+        if (CONJ == (TCell) this->chromosome [lowerPriorityPosition + OPERATION])
+            expression = translateChromosomeIntoExpression (left, lowerPriorityPosition - BLOCK_SHIFT) + " * " +
+                         translateChromosomeIntoExpression (lowerPriorityPosition + BLOCK_SHIFT, right);
+        else
+            expression = '(' + translateChromosomeIntoExpression (left, lowerPriorityPosition - BLOCK_SHIFT) + " + " +
+                         translateChromosomeIntoExpression (lowerPriorityPosition + BLOCK_SHIFT, right) + ')';
+    }
+    else
+    {
+        TOperand operand = this->operandsMatrix->getOperandThrowPosition (this->chromosome [lowerPriorityPosition + X_OPERAND_COORD],
+                                                                  this->chromosome [lowerPriorityPosition + Y_OPERAND_COORD]);
+        if (operanedInverted (operand))
+            expression = "!" + operand;
+        else
+            expression = operand;
+    }
+
+    return expression;
 }
-
-
 
 
 

@@ -1,8 +1,8 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define CONJ 0xFF00
-#define DISJ 0x00FF
+#define CONJ 0xF0
+#define DISJ 0x0F
 #define BOOL_CONJ true
 #define BOOL_DISJ false
 #define OPERAND_FIELD_CAPACITY 256
